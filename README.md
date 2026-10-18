@@ -2,7 +2,17 @@
 
 L'editor integra le modalità della UI di programmazione negli step indipendenti dei 28 canali. Supporta configurazione offline e collegamento Modbus RTU alla scheda; le sequenze miste sono eseguite autonomamente dal firmware 2.0.
 
-## Utilizzo
+## Modifica dell'interfaccia in Visual Studio
+
+La [mappa del codice](docs/Code-map.md) descrive modelli, servizi, controlli, localizzazione e bootloader. La guida tecnica [UI maintenance](docs/UI-maintenance.md) approfondisce responsabilità delle form, flusso dei dati, pagine del wizard e gestione delle risorse.
+
+La finestra principale è divisa in `MainForm.cs` (comportamento, eventi e localizzazione) e `MainForm.Designer.cs` (controlli e layout). Dopo una compilazione, aprire `MainForm.cs` con **Visualizza finestra di progettazione** (`Shift+F7`) per modificare visivamente pannelli, pulsanti, griglia e separatori. Le traduzioni vengono applicate all'avvio: per modificare i testi dell'applicazione usare `Localization/Strings.json`.
+
+Anche `Controls/FirmwareUpdateWizard.cs` può essere aperto con **Visualizza finestra di progettazione**: il layout e i controlli riutilizzabili sono in `FirmwareUpdateWizard.Designer.cs`. Il designer mostra tutti i controlli delle pagine; durante l'esecuzione il wizard mostra quelli della pagina corrente. Il caricamento del firmware e la ricerca delle porte seriali avvengono soltanto a runtime.
+
+L'editor dei parametri degli step rimane dinamico perché i campi dipendono dalla modalità selezionata. Timeline e anteprima LED mantengono il disegno personalizzato; i relativi controlli possono essere posizionati e ridimensionati nel designer della finestra principale.
+
+## Utilizzo dell'editor
 
 Selezionare un canale, aggiungere uno step e selezionare la modalità nel pannello a destra. La tabella mostra durata, posizione finale, modalità e riepilogo dei parametri. Il pannello mostra soltanto i parametri della modalità selezionata.
 

@@ -2,10 +2,13 @@ using System.Windows.Forms.VisualStyles;
 
 namespace OBLSequenceStudio.Controls;
 
+/// <summary>Keeps disabled checkbox text readable on dark backgrounds while retaining the native checkbox glyph.</summary>
 internal sealed class DarkCheckBox : CheckBox
 {
+    /// <summary>Sets the default foreground for the dark preview panel.</summary>
     public DarkCheckBox() => ForeColor = Color.WhiteSmoke;
 
+    /// <summary>Repaints disabled text with greater contrast after the native checkbox has been drawn.</summary>
     protected override void OnPaint(PaintEventArgs e)
     {
         base.OnPaint(e);

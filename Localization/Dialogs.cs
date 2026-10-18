@@ -2,9 +2,16 @@ using OBLSequenceStudio.Controls;
 
 namespace OBLSequenceStudio.Localization;
 
+/// <summary>Builds modal application dialogs whose buttons follow the selected application language.</summary>
 public static class Dialogs
 {
     // Native MessageBox buttons follow Windows' language, not the application's selection.
+    /// <summary>Displays a localized OK dialog or Yes/No confirmation with No as the default confirmation choice.</summary>
+    /// <param name="message">Already localized message text.</param>
+    /// <param name="caption">Window title.</param>
+    /// <param name="buttons">YesNo for confirmation; other values use the OK layout.</param>
+    /// <param name="icon">Icon category exposed through the dialog accessibility description.</param>
+    /// <returns>The dialog result selected by the user.</returns>
     public static DialogResult Show(string message, string caption = "OBL Sequence Studio",
         MessageBoxButtons buttons = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.None)
     {

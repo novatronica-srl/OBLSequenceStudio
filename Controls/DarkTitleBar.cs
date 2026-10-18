@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 
 namespace OBLSequenceStudio.Controls;
 
+/// <summary>Applies supported Windows dark-caption attributes while preserving the native window frame.</summary>
 internal static class DarkTitleBar
 {
     // https://learn.microsoft.com/windows/apps/desktop/modernize/apply-windows-themes
@@ -9,6 +10,7 @@ internal static class DarkTitleBar
     private const int CaptionColor = 35;
     private const int TextColor = 36;
 
+    /// <summary>Applies caption styling when the form handle exists or is subsequently recreated.</summary>
     public static void Attach(Form form)
     {
         form.HandleCreated += Apply;

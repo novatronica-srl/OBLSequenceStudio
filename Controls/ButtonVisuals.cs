@@ -2,8 +2,10 @@ using System.Drawing.Drawing2D;
 
 namespace OBLSequenceStudio.Controls;
 
+/// <summary>Applies shared button interaction styling and draws action icons without external image assets.</summary>
 internal static class ButtonVisuals
 {
+    /// <summary>Configures hover and pressed visuals and the initial icon for an action button.</summary>
     public static void Configure(Button button, string icon)
     {
         button.FlatStyle = FlatStyle.Flat;
@@ -53,6 +55,7 @@ internal static class ButtonVisuals
             TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.EndEllipsis);
     }
 
+    /// <summary>Replaces a button action icon, disposing the previous image when it is replaced.</summary>
     public static void SetIcon(Button button, string key)
     {
         var bitmap = new Bitmap(20, 20);

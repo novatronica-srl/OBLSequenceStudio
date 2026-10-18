@@ -4,6 +4,7 @@ using OBLSequenceStudio.Models;
 
 namespace OBLSequenceStudio.Controls;
 
+/// <summary>Builds parameter fields for the selected effect and edits a bound step through property notifications.</summary>
 public sealed class StepEditorControl : UserControl
 {
     private readonly UiHints _hints = new();
@@ -12,6 +13,7 @@ public sealed class StepEditorControl : UserControl
     private bool _binding;
     private readonly Dictionary<string, NumericUpDown> _numbers = new();
 
+    /// <summary>Creates the scrollable parameter container; effect-specific fields are built when a step is bound.</summary>
     public StepEditorControl()
     {
         AutoScroll = true;
@@ -20,6 +22,8 @@ public sealed class StepEditorControl : UserControl
         Controls.Add(_fields);
     }
 
+    /// <summary>Detaches the previous step subscription and rebuilds fields for the new step.</summary>
+    /// <param name="step">Step to edit, or null to show the selection prompt.</param>
     public void BindStep(SequenceStep? step)
     {
         if (ReferenceEquals(step, _step)) return;
@@ -42,8 +46,10 @@ public sealed class StepEditorControl : UserControl
         finally { _binding = false; }
     }
 
+    /// <summary>Rebuilds field labels and effect choices in the current language while retaining the bound step.</summary>
     public void ApplyLanguage() => Rebuild();
 
+    /// <summary>Replaces effect-specific fields while suppressing change handlers during control initialization.</summary>
     private void Rebuild()
     {
         _binding = true;
@@ -118,6 +124,9 @@ public sealed class StepEditorControl : UserControl
         finally { _fields.ResumeLayout(true); _binding = false; }
     }
 
+    /// <summary>Applies a predefined fire parameter set only when the bound step is a fire effect.</summary>
+    /// <param name="preset">1 for candle, 2 for fireplace, or 3 for torch.</param>
+    /// <exception cref="ArgumentOutOfRangeException">An unsupported preset is requested for an active fire step.</exception>
     public void ApplyFirePreset(int preset)
     {
         if (_step is null || _step.Mode != StepMode.Fire) return;
@@ -128,6 +137,7 @@ public sealed class StepEditorControl : UserControl
         _step.Refresh = values.Item4;
     }
 
+    /// <summary>Initializes valid parameters for the new effect before changing the bound step mode.</summary>
     public void SetMode(StepMode mode)
     {
         if (_step is null) return;
@@ -156,6 +166,7 @@ public sealed class StepEditorControl : UserControl
         _step.Mode = mode;
     }
 
+    /// <summary>Releases tooltips and removes the bound model subscription before disposing child controls.</summary>
     protected override void Dispose(bool disposing)
     {
         if (disposing) _hints.Dispose();

@@ -9,6 +9,18 @@
     <ApplicationIcon>sequence_editor.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Update="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Controls/FirmwareUpdateWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Controls/FirmwareUpdateWizard.Designer.cs">
+      <DependentUpon>FirmwareUpdateWizard.cs</DependentUpon>
+    </Compile>
     <PackageReference Include="System.IO.Ports" Version="9.0.0" />
     <Compile Remove="Tests/**/*.cs" />
     <Content Include="sequence_editor.ico" />

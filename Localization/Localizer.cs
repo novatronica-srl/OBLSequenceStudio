@@ -3,13 +3,19 @@ using System.Text.Json;
 
 namespace OBLSequenceStudio.Localization;
 
+/// <summary>Loads embedded translations and manages the selected language, formatting culture and persisted preference.</summary>
 public static class Localizer
 {
+    /// <summary>Language option displayed by its native name in the selector.</summary>
+    /// <param name="Code">Supported language code used to resolve translations.</param>
+    /// <param name="Name">Native display name.</param>
     public sealed record Language(string Code, string Name)
     {
+        /// <summary>Returns the native display name used by selection controls.</summary>
         public override string ToString() => Name;
     }
 
+    /// <summary>Supported languages in the same order as translation arrays in Strings.json.</summary>
     public static IReadOnlyList<Language> Languages { get; } = new[]
     {
         new Language("it", "Italiano"), new Language("en", "English"), new Language("es", "Español"),
@@ -17,8 +23,11 @@ public static class Localizer
     };
 
     private static readonly Dictionary<string, string[]> Strings = LoadStrings();
+    /// <summary>Currently selected supported language code.</summary>
     public static string Code { get; private set; } = "it";
+    /// <summary>Culture used for localized formatting in the editor.</summary>
     public static CultureInfo Culture { get; private set; } = CultureInfo.GetCultureInfo("it-IT");
+    /// <summary>Resource keys available in the embedded translation dictionary.</summary>
     public static IEnumerable<string> Keys => Strings.Keys;
     private static string PreferencePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
         "OBLSequenceStudio", "language.txt");
@@ -37,12 +46,17 @@ public static class Localizer
                ?? throw new JsonException("Failed to deserialize localization strings.");
     }
 
+    /// <summary>Formats the selected translation with the current formatting culture.</summary>
+    /// <param name="key">Existing key in Strings.json.</param>
+    /// <param name="args">Arguments matching the translation placeholders.</param>
+    /// <returns>Formatted text in the selected language.</returns>
     public static string Text(string key, params object[] args)
     {
         int index = Languages.ToList().FindIndex(language => language.Code == Code);
         return string.Format(Culture, Strings[key][index], args);
     }
 
+    /// <summary>Loads the saved language or operating-system preference, falling back to English when unsupported.</summary>
     public static void Initialize()
     {
         string code = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
@@ -51,6 +65,8 @@ public static class Localizer
         SetLanguage(Languages.Any(l => l.Code == code) ? code : "en");
     }
 
+    /// <summary>Selects a supported language and updates the current thread formatting and UI cultures.</summary>
+    /// <exception cref="ArgumentOutOfRangeException">The language code is unsupported.</exception>
     public static void SetLanguage(string code)
     {
         if (!Languages.Any(l => l.Code == code)) throw new ArgumentOutOfRangeException(nameof(code));
@@ -60,6 +76,8 @@ public static class Localizer
         CultureInfo.CurrentUICulture = Culture;
     }
 
+    /// <summary>Persists the selected language under the current user local application data directory.</summary>
+    /// <returns>False when I/O or access permissions prevent saving; otherwise true.</returns>
     public static bool SavePreference()
     {
         try
@@ -75,6 +93,7 @@ public static class Localizer
         }
     }
 
+    /// <summary>Logs an exception to Debug and maps it to an application-facing localized file or validation message.</summary>
     public static string Error(Exception exception, string filename = "")
     {
         System.Diagnostics.Debug.WriteLine(exception);

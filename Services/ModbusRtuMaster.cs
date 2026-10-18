@@ -8,9 +8,11 @@ public sealed class ModbusRtuMaster : IRegisterClient
     private readonly int baudRate;
     private readonly Action<string>? trace;
     private readonly object sync = new();
+    /// <summary>Uses an already opened serial port; ownership remains with the caller.</summary>
     public ModbusRtuMaster(System.IO.Ports.SerialPort port)
         : this(port.BaseStream, port.BaudRate, port.DiscardInBuffer, ConnectionDiagnostics.Write)
     { transport.ReadTimeout = port.ReadTimeout; transport.WriteTimeout = port.WriteTimeout; }
+    /// <summary>Creates a register client over a caller-owned stream with configurable input flushing and frame tracing.</summary>
     internal ModbusRtuMaster(Stream transport, int baudRate = 38400, Action? discardInput = null, Action<string>? trace = null)
     {
         this.transport = transport ?? throw new ArgumentNullException(nameof(transport));
@@ -19,7 +21,9 @@ public sealed class ModbusRtuMaster : IRegisterClient
         this.discardInput = discardInput ?? (() => { });
         this.trace = trace;
     }
+    /// <summary>Reads 1 to 125 holding registers with function 03 and validates the returned byte count.</summary>
     public ushort[] ReadHoldingRegisters(byte slave, ushort address, ushort count) => Read(slave, 3, address, count);
+    /// <summary>Reads 1 to 125 input registers with function 04 and validates the returned byte count.</summary>
     public ushort[] ReadInputRegisters(byte slave, ushort address, ushort count) => Read(slave, 4, address, count);
     private ushort[] Read(byte slave, byte function, ushort address, ushort count)
     {
@@ -30,7 +34,9 @@ public sealed class ModbusRtuMaster : IRegisterClient
         for (int i = 0; i < count; i++) values[i] = (ushort)((response[3 + i * 2] << 8) | response[4 + i * 2]);
         return values;
     }
+    /// <summary>Writes one holding register using function 06 and validates the echoed address and value.</summary>
     public void WriteSingleRegister(byte slave, ushort address, ushort value) => Exchange(new byte[] { slave, 6, (byte)(address >> 8), (byte)address, (byte)(value >> 8), (byte)value });
+    /// <summary>Writes 1 to 123 holding registers using function 16 with big-endian register bytes.</summary>
     public void WriteMultipleRegisters(byte slave, ushort address, ushort[] values)
     {
         if (values.Length is < 1 or > 123) throw new ArgumentOutOfRangeException(nameof(values));
@@ -40,6 +46,7 @@ public sealed class ModbusRtuMaster : IRegisterClient
         for (int i = 0; i < values.Length; i++) { request[7 + i * 2] = (byte)(values[i] >> 8); request[8 + i * 2] = (byte)values[i]; }
         Exchange(request);
     }
+    /// <summary>Locks the transport for a complete RTU request and validates response CRC, slave, function and write acknowledgement.</summary>
     private byte[] Exchange(byte[] request)
     {
         lock (sync)
@@ -47,7 +54,7 @@ public sealed class ModbusRtuMaster : IRegisterClient
             // RTU requires a silent interval between frames (at least 3.5 characters).
             Thread.Sleep(Math.Max(2, (int)Math.Ceiling(38500.0 / baudRate)));
             // discardInput may reference SerialPort.DiscardInBuffer which throws InvalidOperationException
-            // when the port is closed. Swallow that specific exception here — higher-level
+            // when the port is closed. Swallow that specific exception here ï¿½ higher-level
             // read/write operations will surface appropriate errors if the port is closed.
             try { discardInput(); }
             catch (InvalidOperationException) { }
@@ -74,6 +81,7 @@ public sealed class ModbusRtuMaster : IRegisterClient
             return bytes;
         }
     }
+    /// <summary>Accumulates fragmented transport reads and traces partial responses before propagating I/O and timeout failures.</summary>
     private void ReadExact(byte[] buffer, int offset, int count)
     {
         int received = 0;
@@ -92,12 +100,14 @@ public sealed class ModbusRtuMaster : IRegisterClient
             throw;
         }
     }
+    /// <summary>Computes the Modbus CRC-16; RTU transmits its low byte before its high byte.</summary>
     internal static ushort Crc(ReadOnlySpan<byte> bytes)
     {
         ushort crc = 0xffff;
         foreach (byte value in bytes) { crc ^= value; for (int i = 0; i < 8; i++) crc = (ushort)((crc & 1) != 0 ? (crc >> 1) ^ 0xa001 : crc >> 1); }
         return crc;
     }
+    /// <summary>Leaves the caller-owned transport open; the register client has no transport resource to release.</summary>
     public void Dispose() { } // The caller owns the serial port.
 }
 

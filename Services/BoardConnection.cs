@@ -5,15 +5,30 @@ using OBLSequenceStudio.Models;
 
 namespace OBLSequenceStudio.Services;
 
+/// <summary>Firmware command identifiers written to the command mailbox; values are part of the board protocol.</summary>
 public enum BoardCommand : ushort { Load=1, Apply=2, Start=3, Pause=4, Resume=5, Stop=6, Restart=7, Save=8 }
+/// <summary>Reports a rejected firmware command with its result, step and field in the localized message.</summary>
+/// <param name="result">Firmware result code.</param>
+/// <param name="step">Firmware-reported step associated with the error.</param>
+/// <param name="field">Firmware-reported field associated with the error.</param>
 public sealed class BoardCommandException(ushort result, ushort step, ushort field)
     : Exception(Localizer.Text("BoardCommandError", result, step, field))
 {
+    /// <summary>Raw firmware result code retained for callers that need to distinguish command errors.</summary>
     public ushort Result { get; } = result;
 }
+/// <summary>Decoded board state; channel arrays use zero-based indices for channels 1 through 28.</summary>
+/// <param name="Pwm">Per-channel brightness percentages.</param>
+/// <param name="States">Raw per-channel playback state codes.</param>
+/// <param name="Steps">Firmware-reported active steps.</param>
+/// <param name="Elapsed">Per-channel elapsed playback time in milliseconds.</param>
+/// <param name="Revision">Board configuration revision.</param>
+/// <param name="SaveState">Raw asynchronous persistence state.</param>
+/// <param name="Dirty">Whether the board reports unsaved configuration changes.</param>
 public sealed record BoardTelemetry(int[] Pwm, ushort[] States, ushort[] Steps, uint[] Elapsed,
     uint Revision, ushort SaveState, bool Dirty);
 
+/// <summary>Owns a Modbus serial connection and serializes configuration, command and telemetry transactions.</summary>
 public sealed class BoardConnection : IDisposable
 {
     private readonly SerialPort _port;
@@ -22,10 +37,14 @@ public sealed class BoardConnection : IDisposable
     private bool _disposed;
     private ushort _commandSequence;
     private readonly Dictionary<int, ChannelSequence> _applied;
+    /// <summary>Connection settings and firmware version for display in the editor.</summary>
     public string Description { get; }
+    /// <summary>Validated configuration loaded during connection initialization.</summary>
     public DeviceSequences Configuration { get; }
+    /// <summary>Serial port name that can be retained as a hint for the firmware wizard.</summary>
     public string PortName => _port.PortName;
 
+    /// <summary>Validates metadata and loads all channels, rejecting a configuration revision change during the read.</summary>
     internal BoardConnection(SerialPort port, IRegisterClient master, ushort[] metadata)
     {
         ValidateMetadata(metadata);
@@ -46,6 +65,7 @@ public sealed class BoardConnection : IDisposable
         _applied = Configuration.Channels.ToDictionary(c => c.ChannelNumber, c => c.Clone(c.ChannelNumber));
     }
 
+    /// <summary>Requires the firmware 2 protocol identity, feature flags and supported channel and record sizes.</summary>
     internal static void ValidateMetadata(ushort[] m)
     {
         if (m.Length < 20 || m[0] != 1 || m[1] >> 8 != 2 || m[2] != 0x0200 || (m[3] & 15) != 15 ||
@@ -53,6 +73,10 @@ public sealed class BoardConnection : IDisposable
             throw new InvalidDataException(Localizer.Text("UnsupportedProtocol"));
     }
 
+    /// <summary>Probes available ports at supported baud rates and parities, then loads the first compatible board.</summary>
+    /// <param name="progress">Receives the current port and serial settings being probed.</param>
+    /// <param name="cancellation">Cancels discovery and closes the probed port during configuration loading.</param>
+    /// <returns>An owned connection, or null when no compatible board is discovered.</returns>
     public static Task<BoardConnection?> FindAsync(IProgress<string> progress, CancellationToken cancellation) => Task.Run(() =>
     {
         ConnectionDiagnostics.Begin();
@@ -99,6 +123,7 @@ public sealed class BoardConnection : IDisposable
         return null;
     }, cancellation);
 
+    /// <summary>Retries identity reads up to three times for transient I/O or timeout failures.</summary>
     internal static ushort[] ReadIdentity(IRegisterClient master, CancellationToken cancellation)
     {
         for (int attempt = 1; ; attempt++)
@@ -113,6 +138,8 @@ public sealed class BoardConnection : IDisposable
         }
     }
 
+    /// <summary>Validates and encodes one channel into a 142-word firmware staging record.</summary>
+    /// <returns>Step count and cyclic flag followed by ten 14-word step slots, including reserved zero fields.</returns>
     public static ushort[] Encode(ChannelSequence channel)
     {
         var validation = DeviceSequences.CreateDefault();
@@ -130,6 +157,7 @@ public sealed class BoardConnection : IDisposable
         return words;
     }
 
+    /// <summary>Decodes one 142-word staging record and rejects unsupported nonzero reserved step fields.</summary>
     internal static ChannelSequence Decode(int channel, ushort[] words)
     {
         if (words.Length != 142 || words[0] > 10 || words[1] > 1) throw new InvalidDataException(Localizer.Text("InvalidProgrammerConfig"));
@@ -145,6 +173,7 @@ public sealed class BoardConnection : IDisposable
         return result;
     }
 
+    /// <summary>Writes command arguments before the separate sequence-number trigger and waits up to five seconds for its acknowledgement.</summary>
     private void Execute(BoardCommand command, ushort channel, ushort options = 0)
     {
         ObjectDisposedException.ThrowIf(_disposed, this);
@@ -165,6 +194,7 @@ public sealed class BoardConnection : IDisposable
         throw new TimeoutException(Localizer.Text("BoardAckTimeout"));
     }
 
+    /// <summary>Serializes a complete board operation on a worker and releases the gate even when the operation fails.</summary>
     private async Task<T> RunAsync<T>(Func<T> action)
     {
         await _gate.WaitAsync().ConfigureAwait(false);
@@ -172,6 +202,11 @@ public sealed class BoardConnection : IDisposable
         finally { _gate.Release(); }
     }
 
+    /// <summary>Writes only changed target channels and updates the applied cache after each acknowledged channel.</summary>
+    /// <param name="snapshot">Stable configuration supplied by the caller; repeat flags are normalized in place.</param>
+    /// <param name="start">Whether each applied channel should begin playback.</param>
+    /// <param name="target">Zero for all channels, otherwise a channel number from 1 to 28.</param>
+    /// <returns>The number of channels written.</returns>
     public Task<int> ApplyAsync(DeviceSequences snapshot, bool start = true, int target = 0) => RunAsync(() =>
     {
         SequenceService.Validate(snapshot);
@@ -190,12 +225,16 @@ public sealed class BoardConnection : IDisposable
         return changed.Length;
     });
 
+    /// <summary>Sends a playback command through the serialized command mailbox.</summary>
+    /// <param name="command">Playback command; Load, Apply and Save use dedicated workflows.</param>
+    /// <param name="channel">Zero for all channels, otherwise a channel number from 1 to 28.</param>
     public Task CommandAsync(BoardCommand command, int channel = 0) => RunAsync(() =>
     {
         if (command is BoardCommand.Load or BoardCommand.Apply or BoardCommand.Save || channel is < 0 or > 28) throw new ArgumentOutOfRangeException(nameof(command));
         Execute(command, (ushort)channel); return 0;
     });
 
+    /// <summary>Requests board persistence and polls completion for up to 20 seconds after acknowledgement.</summary>
     public Task SaveAsync() => RunAsync(() =>
     {
         Execute(BoardCommand.Save, 0);
@@ -210,6 +249,7 @@ public sealed class BoardConnection : IDisposable
         throw new TimeoutException(Localizer.Text("BoardSaveTimeout"));
     });
 
+    /// <summary>Reads and validates board telemetry in two blocks compatible with deployed firmware register-count limits.</summary>
     public Task<BoardTelemetry> ReadTelemetryAsync() => RunAsync(() =>
     {
         // This board's FreeModbus handler rejects count=125 (strict <125 check).
@@ -220,5 +260,6 @@ public sealed class BoardConnection : IDisposable
             Enumerable.Range(0, 28).Select(i => ((uint)r[104 + i] << 16) | r[132 + i]).ToArray(),
             ((uint)r[12] << 16) | r[13], r[14], r[15] != 0);
     });
+    /// <summary>Marks the connection unavailable and releases its serial port and register client.</summary>
     public void Dispose() { _disposed = true; _port.Dispose(); _master.Dispose(); }
 }

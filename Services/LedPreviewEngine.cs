@@ -2,11 +2,17 @@ using OBLSequenceStudio.Models;
 
 namespace OBLSequenceStudio.Services;
 
+/// <summary>Simulates cyclic LED brightness, retaining deterministic filtered fire state per channel.</summary>
 public sealed class LedPreviewEngine
 {
     private readonly Dictionary<int, FireState> _fire = new();
+    /// <summary>Discards fire history so seeking or rebinding can replay samples from their deterministic seed.</summary>
     public void Reset() => _fire.Clear();
 
+    /// <summary>Evaluates all channels, restarting multi-step effect phases at each step and cycle boundary.</summary>
+    /// <param name="device">Configuration to preview, or null for an all-off result.</param>
+    /// <param name="elapsed">Playback time in milliseconds; negative time is treated as zero.</param>
+    /// <returns>28 rounded brightness percentages indexed by channel number minus one.</returns>
     public int[] Evaluate(DeviceSequences? device, long elapsed)
     {
         int[] values = new int[28];
@@ -32,6 +38,8 @@ public sealed class LedPreviewEngine
                 if (!_fire.TryGetValue(channel.ChannelNumber, out var state) || state.Index != index || state.Iteration != iteration ||
                     !state.Step.SameValues(step) || samples < state.Samples)
                 {
+                    // Recreate history after seeking backwards, editing parameters or entering another step/cycle.
+                    // A stable seed makes repeated previews reproducible without matching the board's random stream.
                     state = new FireState(step.Clone(), index, iteration, unchecked(channel.ChannelNumber * 7919 + index * 104729 + (int)iteration));
                     _fire[channel.ChannelNumber] = state;
                 }
@@ -51,6 +59,7 @@ public sealed class LedPreviewEngine
         return values;
     }
 
+    /// <summary>Retains one step snapshot, cycle identity and seeded Gaussian generator for incremental fire sampling.</summary>
     private sealed class FireState(SequenceStep step, int index, long iteration, int seed)
     {
         public SequenceStep Step { get; } = step;
@@ -61,6 +70,7 @@ public sealed class LedPreviewEngine
         public double Previous { get; set; }
         private readonly Random _random = new(seed);
         private double? _spare;
+        /// <summary>Produces a standard normal sample using the polar method and reuses the paired sample on the next call.</summary>
         public double Gaussian()
         {
             if (_spare is double spare) { _spare = null; return spare; }

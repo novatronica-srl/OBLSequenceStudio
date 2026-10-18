@@ -7,8 +7,11 @@ using OBLSequenceStudio.Models;
 namespace OBLSequenceStudio.Services;
 
 // Same 224 little-endian registers saved by ControllerV1Control.ReadConfig.
+/// <summary>Imports legacy programmer configurations containing eight blocks of 28 little-endian registers.</summary>
 public static class ProgrammerConfigurationImporter
 {
+    /// <summary>Reads a single XML ConfigurationFile row with a Base64 payload while disabling DTD and external resolution.</summary>
+    /// <exception cref="InvalidDataException">The payload, configuration row or decoded effect parameters are invalid.</exception>
     public static DeviceSequences Load(string filename)
     {
         using var reader = XmlReader.Create(filename, new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit, XmlResolver = null });
@@ -26,6 +29,11 @@ public static class ProgrammerConfigurationImporter
             row.Elements().FirstOrDefault(e => e.Name.LocalName == "BoardVersion")?.Value);
     }
 
+    /// <summary>Converts a legacy register payload to one cyclic effect per channel and validates the resulting configuration.</summary>
+    /// <param name="payload">Exactly 448 bytes representing 224 little-endian registers.</param>
+    /// <param name="product">Optional source-board product identifier.</param>
+    /// <param name="version">Optional source-board firmware version.</param>
+    /// <returns>A complete configuration with channels numbered 1 through 28.</returns>
     public static DeviceSequences FromPayload(byte[] payload, string? product, string? version)
     {
         if (payload.Length != 448) throw new InvalidDataException(Localizer.Text("InvalidProgrammerConfig"));

@@ -4,14 +4,18 @@ using OBLSequenceStudio.Models;
 
 namespace OBLSequenceStudio.Services;
 
+/// <summary>Validates sequence configurations and converts them to JSON, CSV and the legacy ramp register layout.</summary>
 public static class SequenceService
 {
+    /// <summary>Normalizes legacy repeat flags in place so all channels follow the editor cyclic-playback contract.</summary>
     public static void EnsureCyclic(DeviceSequences device)
     {
         foreach (var channel in device.Channels) channel.Repeat = true;
     }
     private static readonly JsonSerializerOptions Options = new() { WriteIndented = true, PropertyNameCaseInsensitive = true };
 
+    /// <summary>Checks schema, channel identity, preview colors, step counts and effect parameter ranges.</summary>
+    /// <exception cref="InvalidDataException">The configuration violates a supported schema or effect constraint.</exception>
     public static void Validate(DeviceSequences device)
     {
         if (device.SchemaVersion is < 1 or > 2) throw new InvalidDataException(Localizer.Text("InvalidJson"));
@@ -35,6 +39,7 @@ public static class SequenceService
         }
     }
 
+    /// <summary>Checks only the parameters active for the selected effect; step duration is validated separately.</summary>
     public static bool ValidEffect(SequenceStep step)
     {
         bool Percent(int value) => value is >= 0 and <= 100;
@@ -49,6 +54,7 @@ public static class SequenceService
         };
     }
 
+    /// <summary>Formats a localized summary of the active effect parameters for the grid.</summary>
     public static string ParameterSummary(SequenceStep step) => step.Mode switch
     {
         StepMode.Fixed => $"{step.Brightness}%",
@@ -58,6 +64,7 @@ public static class SequenceService
         _ => Localizer.Text("RampSummary", step.Start, step.End)
     };
 
+    /// <summary>Validates and normalizes the configuration before exporting semicolon-separated step rows with millisecond timing.</summary>
     public static void ExportCsv(string filename, DeviceSequences device)
     {
         Validate(device);
@@ -76,6 +83,7 @@ public static class SequenceService
         }
     }
 
+    /// <summary>Validates, normalizes cyclic playback and writes an indented JSON configuration.</summary>
     public static void Save(string filename, DeviceSequences device)
     {
         Validate(device);
@@ -83,6 +91,7 @@ public static class SequenceService
         File.WriteAllText(filename, JsonSerializer.Serialize(device, Options));
     }
 
+    /// <summary>Loads and validates JSON, normalizes cyclic playback and orders channels by their one-based number.</summary>
     public static DeviceSequences Load(string filename)
     {
         var device = JsonSerializer.Deserialize<DeviceSequences>(File.ReadAllText(filename), Options)
@@ -93,8 +102,9 @@ public static class SequenceService
         return device;
     }
 
-    // Tracciato logico dei registri di un canale: 10 start, 10 end, 10 duration.
-    // NON è una scrittura hardware: l'indirizzamento va configurato sulla mappa reale.
+    /// <summary>Exports a ramp-only channel as 30 logical registers: ten starts, ten ends and ten durations.</summary>
+    /// <returns>Zero-padded legacy register values, without hardware addresses.</returns>
+    /// <exception cref="InvalidOperationException">The channel contains unsupported effects, too many steps or out-of-range ramp values.</exception>
     public static ushort[] ToRegisters(ChannelSequence channel)
     {
         if (channel.Steps.Any(s => s.Mode != StepMode.Ramp)) throw new InvalidOperationException(Localizer.Text("LegacyExportError"));
@@ -109,7 +119,7 @@ public static class SequenceService
             registers[10 + i] = (ushort)s.End;
             registers[20 + i] = (ushort)s.Duration;
         }
-        // Zero sugli step non usati: verificare la convenzione nel firmware.
+        // Unused legacy slots remain zero; this layout does not define hardware addresses.
         return registers;
     }
 }

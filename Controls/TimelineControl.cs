@@ -5,31 +5,40 @@ using OBLSequenceStudio.Models;
 
 namespace OBLSequenceStudio.Controls;
 
+/// <summary>Draws 28 channel timelines and translates pointer gestures into channel, step and endpoint edits.</summary>
 public sealed class TimelineControl : Control
 {
+    /// <summary>Runtime configuration to draw; excluded from designer serialization.</summary>
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public DeviceSequences? Device { get; set; }
 
+    /// <summary>One-based channel highlighted in the timeline.</summary>
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public int SelectedChannel { get; set; } = 1;
 
+    /// <summary>Playback cursor position in milliseconds from the start of the timeline.</summary>
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public long CursorMs { get; set; }
 
+    /// <summary>Requests a seek to the emitted timeline position in milliseconds.</summary>
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public event Action<long>? CursorChanged;
 
+    /// <summary>Reports selection using a one-based channel number.</summary>
     [Browsable(false)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public event Action<int>? ChannelSelected;
+    /// <summary>Reports a dragged endpoint as channel number, zero-based step index, absolute milliseconds and brightness percentage.</summary>
     public event Action<int, int, long, int>? PointMoved;
+    /// <summary>Reports a selected block as a one-based channel number and zero-based step index.</summary>
     public event Action<int, int>? StepSelected;
     private int _dragChannel = -1, _dragStep = -1;
     private long _dragMaxTime;
+    /// <summary>Enables buffered timeline painting and redraw when the control is resized.</summary>
     public TimelineControl()
     {
         DoubleBuffered = true;
@@ -47,6 +56,7 @@ public sealed class TimelineControl : Control
         0 => Color.FromArgb(59, 200, 240),
         _ => Color.FromArgb(89 + (index * 41) % 144, 120 + (index * 57) % 116, 145 + (index * 29) % 108)
     };
+    /// <summary>Draws the time scale, channel rows, effect blocks and playback cursor from runtime data.</summary>
     protected override void OnPaint(PaintEventArgs e)
     {
         base.OnPaint(e);
@@ -130,6 +140,7 @@ public sealed class TimelineControl : Control
         double n = raw / p;
         return Math.Max(1, (long)((n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p));
     }
+    /// <summary>Begins endpoint dragging or reports a channel, block or cursor selection based on hit testing.</summary>
     protected override void OnMouseDown(MouseEventArgs e)
     {
         base.OnMouseDown(e);
@@ -181,6 +192,7 @@ public sealed class TimelineControl : Control
         }
         Invalidate();
     }
+    /// <summary>Reports endpoint edits while preserving the time scale captured at the start of the drag.</summary>
     protected override void OnMouseMove(MouseEventArgs e)
     {
         base.OnMouseMove(e);
@@ -200,6 +212,7 @@ public sealed class TimelineControl : Control
             Invalidate();
         }
     }
+    /// <summary>Ends the active pointer gesture and releases mouse capture.</summary>
     protected override void OnMouseUp(MouseEventArgs e)
     {
         base.OnMouseUp(e);
@@ -209,6 +222,7 @@ public sealed class TimelineControl : Control
         Invalidate();
     }
 
+    /// <summary>Clears drag state if another window or control takes mouse capture.</summary>
     protected override void OnMouseCaptureChanged(EventArgs e)
     {
         base.OnMouseCaptureChanged(e);

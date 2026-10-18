@@ -6,90 +6,65 @@ using OBLSequenceStudio.Services;
 
 namespace OBLSequenceStudio;
 
-public sealed class MainForm : Form
+/// <summary>
+/// Coordinates sequence editing, LED previews, file operations and the board connection.
+/// </summary>
+/// <remarks>
+/// The designer partial owns the visual layout. Runtime initialization and device operations
+/// belong here so that opening the form in Visual Studio does not start application workflows.
+/// </remarks>
+public sealed partial class MainForm : Form
 {
-    private DeviceSequences _device;
+    // Initialized only at runtime; designer initialization must not access the device model.
+    private DeviceSequences _device = null!;
     private readonly UiHints _hints = new();
     private int _selected = 1;
     private string? _filename;
     private bool _dirty, _loading;
-    private readonly TimelineControl _timeline = new();
-    private readonly DataGridView _grid = new();
-    private readonly ListBox _channels = new();
-    private readonly Label _summary = new(), _status = new(), _cursor = new();
-    private readonly NumericUpDown _destination = new() { Minimum = 1, Maximum = 28, Value = 2, Width = 65 };
+
+    // Editable copies of the selected channel's steps; PersistRows commits them to the model.
     private readonly BindingList<SequenceStep> _rows = new();
-    private readonly Color _bg = Color.FromArgb(16, 21, 32);
-    private readonly Color _panel = Color.FromArgb(27, 34, 48);
-    private readonly Color _accent = Color.FromArgb(40, 167, 219);
-    private readonly ComboBox _language = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 115, ForeColor = SystemColors.WindowText, BackColor = SystemColors.Window };
+
     private readonly List<(Control Control, string Key)> _localizedControls = new();
     private string _statusKey = "Ready";
     private object[] _statusArgs = Array.Empty<object>();
-    private readonly StepEditorControl _stepEditor = new() { Dock = DockStyle.Right, Width = 350 };
-    private readonly Label _repeat = new() { AutoSize = true, Margin = new Padding(8, 12, 3, 0) };
-    private readonly LedPreviewControl _ledPreview = new() { Dock = DockStyle.Fill };
-    private readonly Button _connect = new() { AutoSize = true, Margin = new Padding(4) };
-    private readonly CheckBox _live = new() { AutoSize = true, Checked = true, ForeColor = Color.WhiteSmoke, Margin = new Padding(5, 10, 8, 0) };
+
+    // Restarted after each edit to group live changes into one write after 400 ms of inactivity.
     private readonly System.Windows.Forms.Timer _writeTimer = new() { Interval = 400 };
     private CancellationTokenSource? _search;
     private BoardConnection? _connection;
     private bool _writing;
     private bool _readingTelemetry;
+    // Poll every 300 ms; _readingTelemetry prevents overlapping reads across asynchronous ticks.
     private readonly System.Windows.Forms.Timer _telemetryTimer = new() { Interval = 300 };
-    private readonly ComboBox _hardwareTarget = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 145, ForeColor = SystemColors.WindowText, BackColor = SystemColors.Window };
-    private readonly List<Button> _hardwareButtons = new();
-    private readonly Label _boardState = new() { AutoSize = true, Margin = new Padding(5) };
-    private Button? _firmwareButton;
 
+    private readonly List<Button> _hardwareButtons = new();
+
+    /// <summary>
+    /// Creates the design surface and, outside the designer, initializes the editor and language.
+    /// </summary>
     public MainForm()
     {
+        InitializeComponent();
+        // Keep data binding, user preferences and device operations out of the designer.
+        if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
+        _device = DeviceSequences.CreateDefault();
         DarkTitleBar.Attach(this);
         Localizer.Initialize();
-        _device = DeviceSequences.CreateDefault();
-        MinimumSize = new Size(1150, 760);
-        Size = new Size(1480, 950);
-        StartPosition = FormStartPosition.CenterScreen;
-        BackColor = _bg;
-        ForeColor = Color.WhiteSmoke;
-        Font = new Font("Segoe UI", 9.5f);
-        BuildUi();
+        ConfigureRuntimeUi();
         WireEvents();
         BindDevice();
         ApplyLanguage();
         WindowState = FormWindowState.Maximized;
         Disposed += (_, _) => _hints.Dispose();
-
-        this.Shown += MainForm_Shown;
     }
 
-    private void MainForm_Shown(object sender, EventArgs e)
-    {
-        // choose a fraction that matches desired initial layout, e.g. 60% for top panel
-        //vertical.SplitterDistance = (int)(vertical.ClientSize.Height * 0.6);
-    }
-
-    private Button ActionButton(string title, Action action)
-    {
-        var b = new Button
-        {
-            Text = Localizer.Text(title),
-            AutoSize = true,
-            Height = 34,
-            Padding = new Padding(8, 3, 8, 3),
-            FlatStyle = FlatStyle.Flat,
-            BackColor = _panel,
-            ForeColor = Color.WhiteSmoke,
-            Margin = new Padding(4)
-        };
-        b.FlatAppearance.BorderColor = Color.FromArgb(65, 79, 98);
-        ButtonVisuals.Configure(b, title);
-        _hints.Set(b, title);
-        b.Click += (_, _) => action();
-        _localizedControls.Add((b, title));
-        return b;
-    }
-
+    /// <summary>
+    /// Registers a control's resource key for both its caption and localized tooltips.
+    /// </summary>
+    /// <param name="control">Control whose text is managed by runtime localization.</param>
+    /// <param name="key">Key in the embedded localization resources.</param>
+    /// <returns>The same control, allowing registration during UI configuration.</returns>
     private T Translate<T>(T control, string key) where T : Control
     {
         control.Text = Localizer.Text(key);
@@ -98,6 +73,9 @@ public sealed class MainForm : Form
         return control;
     }
 
+    /// <summary>
+    /// Refreshes localized captions, grid formatting and channel descriptions without rebuilding the layout.
+    /// </summary>
     private void ApplyLanguage()
     {
         SuspendLayout();
@@ -131,6 +109,9 @@ public sealed class MainForm : Form
         finally { ResumeLayout(true); }
     }
 
+    /// <summary>
+    /// Retains the status resource key and arguments so a language change can translate the current message.
+    /// </summary>
     private void SetStatus(string key, params object[] args)
     {
         _statusKey = key;
@@ -138,33 +119,44 @@ public sealed class MainForm : Form
         _status.Text = Localizer.Text(key, args);
     }
 
-    private void BuildUi()
+    /// <summary>
+    /// Attaches actions, localization, data binding and adaptive layout behavior to designer-created controls.
+    /// </summary>
+    /// <remarks>Called once by the runtime constructor; repeated calls would duplicate event handlers.</remarks>
+    private void ConfigureRuntimeUi()
     {
-        var outer = new TableLayoutPanel
-        { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 3, Padding = new Padding(12) };
-        outer.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        outer.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-        outer.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-        Controls.Add(outer);
-
-        var toolbar = new FlowLayoutPanel
-        { Dock = DockStyle.Fill, WrapContents = false, AutoScroll = true, BackColor = _bg, Margin = Padding.Empty };
-        var languagePanel = new FlowLayoutPanel
-        { Dock = DockStyle.Fill, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink, WrapContents = false, Margin = Padding.Empty };
-        languagePanel.Controls.Add(Translate(new Label { AutoSize = true, Margin = new Padding(12, 11, 3, 0) }, "Language"));
+        ConfigureActionButton(_newButton, "New", NewFile);
+        ConfigureActionButton(_openButton, "Open", OpenFile);
+        ConfigureActionButton(_saveButton, "Save", () => SaveFile(false));
+        ConfigureActionButton(_saveAsButton, "SaveAs", () => SaveFile(true));
+        ConfigureActionButton(_firmwareButton, "FirmwareUpdate", OpenFirmwareWizard);
+        ConfigureActionButton(_addStepButton, "AddStep", AddStep);
+        ConfigureActionButton(_deleteStepButton, "DeleteStep", DeleteStep);
+        ConfigureActionButton(_clearButton, "Clear", ClearSteps);
+        ConfigureActionButton(_copyButton, "Copy", CopyTo);
+        ConfigureActionButton(_singleStepButton, "SingleStep", KeepSingleStep);
+        ConfigureActionButton(_applyBoardButton, "ApplyBoard", async () => await HardwareActionAsync(null));
+        ConfigureActionButton(_startBoardButton, "StartBoard", async () => await HardwareActionAsync(BoardCommand.Start));
+        ConfigureActionButton(_pauseBoardButton, "PauseBoard", async () => await HardwareActionAsync(BoardCommand.Pause));
+        ConfigureActionButton(_resumeBoardButton, "ResumeBoard", async () => await HardwareActionAsync(BoardCommand.Resume));
+        ConfigureActionButton(_stopBoardButton, "StopBoard", async () => await HardwareActionAsync(BoardCommand.Stop));
+        ConfigureActionButton(_restartBoardButton, "RestartBoard", async () => await HardwareActionAsync(BoardCommand.Restart));
+        ConfigureActionButton(_saveBoardButton, "SaveBoard", async () => await HardwareActionAsync(BoardCommand.Save));
+        ButtonVisuals.Configure(_connect, "Connect");
+        _hardwareButtons.Add(_applyBoardButton);
+        _hardwareButtons.Add(_startBoardButton);
+        _hardwareButtons.Add(_pauseBoardButton);
+        _hardwareButtons.Add(_resumeBoardButton);
+        _hardwareButtons.Add(_stopBoardButton);
+        _hardwareButtons.Add(_restartBoardButton);
+        _hardwareButtons.Add(_saveBoardButton);
+        Translate(_languageLabel, "Language");
+        Translate(_channelsLabel, "Channels");
+        Translate(_live, "LiveChanges");
+        Translate(_repeat, "AlwaysCyclic");
         _language.Items.AddRange(Localizer.Languages.Cast<object>().ToArray());
         _language.SelectedItem = Localizer.Languages.First(l => l.Code == Localizer.Code);
-        _language.Margin = new Padding(3, 8, 0, 0);
-        languagePanel.Controls.Add(_language);
-        toolbar.Controls.Add(ActionButton("New", NewFile));
-        toolbar.Controls.Add(ActionButton("Open", OpenFile));
-        toolbar.Controls.Add(ActionButton("Save", () => SaveFile(false)));
-        var saveAs = ActionButton("SaveAs", () => SaveFile(true));
-        saveAs.Margin = new Padding(4, 4, 16, 4);
-        toolbar.Controls.Add(saveAs);
-        ButtonVisuals.Configure(_connect, "Connect");
-        toolbar.Controls.Add(_connect);
-        toolbar.Controls.Add(Translate(_live, "LiveChanges"));
+
         _connect.Click += async (_, _) => await ToggleConnectionAsync();
         _live.CheckedChanged += (_, _) =>
         {
@@ -183,30 +175,7 @@ public sealed class MainForm : Form
             ApplyLanguage();
             if (!Localizer.SavePreference()) SetStatus("PreferenceError");
         };
-        _firmwareButton = ActionButton("FirmwareUpdate", OpenFirmwareWizard);
-        toolbar.Controls.Add(_firmwareButton);
-        var header = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 1, Margin = Padding.Empty };
-        header.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        header.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-        header.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-        header.Controls.Add(toolbar, 0, 0);
-        header.Controls.Add(languagePanel, 1, 0);
-        var hardware = new FlowLayoutPanel { Dock = DockStyle.Fill, WrapContents = false, AutoScroll = true, Margin = Padding.Empty };
-        _hardwareTarget.Margin = new Padding(4, 8, 4, 0);
-        hardware.Controls.Add(_hardwareTarget);
-        foreach (var item in new[] { ("ApplyBoard", (BoardCommand?)null), ("StartBoard", (BoardCommand?)BoardCommand.Start), ("PauseBoard", (BoardCommand?)BoardCommand.Pause), ("ResumeBoard", (BoardCommand?)BoardCommand.Resume), ("StopBoard", (BoardCommand?)BoardCommand.Stop), ("RestartBoard", (BoardCommand?)BoardCommand.Restart), ("SaveBoard", (BoardCommand?)BoardCommand.Save) })
-        {
-            var command = item.Item2;
-            var button = ActionButton(item.Item1, async () => await HardwareActionAsync(command));
-            _hardwareButtons.Add(button); hardware.Controls.Add(button);
-        }
-        var bars = new TableLayoutPanel { Dock = DockStyle.Top, AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink, RowCount = 3, ColumnCount = 1, Margin = Padding.Empty };
-        bars.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        bars.RowStyles.Add(new RowStyle(SizeType.Absolute, 44));
-        bars.RowStyles.Add(new RowStyle(SizeType.Absolute, 44));
-        bars.RowStyles.Add(new RowStyle(SizeType.AutoSize));
-        _boardState.Margin = new Padding(5, 2, 0, 2);
-        _boardState.Visible = false;
+
         void FitToolbarRow(FlowLayoutPanel panel, int row)
         {
             float height = 44 + (panel.HorizontalScroll.Visible ? SystemInformation.HorizontalScrollBarHeight : 0);
@@ -214,124 +183,15 @@ public sealed class MainForm : Form
         }
         toolbar.Layout += (_, _) => FitToolbarRow(toolbar, 0);
         hardware.Layout += (_, _) => FitToolbarRow(hardware, 1);
-        bars.Controls.Add(header, 0, 0); bars.Controls.Add(hardware, 0, 1); bars.Controls.Add(_boardState, 0, 2);
-        outer.Controls.Add(bars, 0, 0);
+
         _telemetryTimer.Tick += async (_, _) => await ReadTelemetryAsync();
 
-        var vertical = new SplitContainer
-        {
-            Dock = DockStyle.Fill,
-            Orientation = Orientation.Horizontal,
-            SplitterWidth = 7,
-            BackColor = _bg,
-            Panel1MinSize = 260,
-            Panel2MinSize = 60
-        };
-        vertical.Size = new Size(outer.ClientSize.Width - outer.Padding.Horizontal, 600); // or a chosen size
-        outer.Controls.Add(vertical, 0, 1);
-        vertical.SplitterDistance = 450;
-
-        var previewLayout = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 1, Margin = Padding.Empty };
-        previewLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        previewLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 350));
-        previewLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-        vertical.Panel1.Controls.Add(previewLayout);
-        previewLayout.Controls.Add(_ledPreview, 1, 0);
-        _timeline.AutoScrollOffset = new Point(0, 0);
-        // La timeline disegna 28 righe: lo scroll verticale è gestito dal contenitore.
-        var scroll = new Panel { Dock = DockStyle.Fill, AutoScroll = true, BackColor = _bg, Margin = Padding.Empty };
-        previewLayout.Controls.Add(scroll, 0, 0);
-        scroll.Controls.Add(_timeline);
-        _timeline.Dock = DockStyle.Top;
-        _timeline.Height = 40 + 28 * 35 + 28;
         scroll.Resize += (_, _) =>
         {
             _timeline.Width = Math.Max(scroll.ClientSize.Width - 20, 800);
             _timeline.Invalidate();
         };
 
-        var bottom = new SplitContainer
-        {
-            Dock = DockStyle.Fill,
-            SplitterWidth = 7,
-            BackColor = _bg,
-            Panel1MinSize = 165
-        };
-        vertical.Panel2.Controls.Add(bottom);
-        bottom.SplitterDistance = 200;
-
-        var chPanel = new Panel { Dock = DockStyle.Fill, Padding = new Padding(5), BackColor = _panel };
-        chPanel.Controls.Add(_channels);
-        chPanel.Controls.Add(Translate(new Label
-        {
-            Dock = DockStyle.Top,
-            Height = 36,
-            TextAlign = ContentAlignment.MiddleLeft,
-            Font = new Font(Font, FontStyle.Bold),
-            ForeColor = Color.FromArgb(137, 208, 244)
-        }, "Channels"));
-        _channels.Dock = DockStyle.Fill;
-        _channels.BackColor = _panel;
-        _channels.ForeColor = Color.WhiteSmoke;
-        _channels.BorderStyle = BorderStyle.None;
-        _channels.IntegralHeight = false;
-        bottom.Panel1.Controls.Add(chPanel);
-
-        var detail = new Panel { Dock = DockStyle.Fill, Padding = new Padding(8), BackColor = _panel };
-        bottom.Panel2.Controls.Add(detail);
-        var rightTop = new FlowLayoutPanel { Dock = DockStyle.Top, Height = 88, WrapContents = true, AutoScroll = true };
-        _summary.AutoSize = true;
-        _summary.Font = new Font(Font.FontFamily, 12, FontStyle.Bold);
-        _summary.Margin = new Padding(5, 12, 25, 0);
-        rightTop.Controls.Add(_summary);
-        rightTop.SetFlowBreak(_summary, true);
-        rightTop.Controls.Add(ActionButton("AddStep", AddStep));
-        rightTop.Controls.Add(ActionButton("DeleteStep", DeleteStep));
-        rightTop.Controls.Add(ActionButton("Clear", ClearSteps));
-        rightTop.Controls.Add(ActionButton("Copy", CopyTo));
-        rightTop.Controls.Add(ActionButton("SingleStep", KeepSingleStep));
-        rightTop.Controls.Add(Translate(_repeat, "AlwaysCyclic"));
-        _destination.Margin = new Padding(3, 8, 3, 0);
-        rightTop.Controls.Add(_destination);
-        detail.Controls.Add(_grid);
-        detail.Controls.Add(_stepEditor);
-        detail.Controls.Add(rightTop);
-
-        _grid.Dock = DockStyle.Fill;
-        _grid.BackgroundColor = _panel;
-        _grid.GridColor = Color.FromArgb(61, 75, 92);
-        _grid.BorderStyle = BorderStyle.None;
-        _grid.EnableHeadersVisualStyles = false;
-        _grid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(40, 53, 73);
-        _grid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-        _grid.DefaultCellStyle.BackColor = Color.FromArgb(29, 39, 56);
-        _grid.DefaultCellStyle.ForeColor = Color.WhiteSmoke;
-        _grid.DefaultCellStyle.SelectionBackColor = Color.FromArgb(24, 110, 153);
-        _grid.DefaultCellStyle.SelectionForeColor = Color.White;
-        _grid.RowHeadersVisible = false;
-        _grid.AllowUserToAddRows = false;
-        _grid.AllowUserToDeleteRows = false;
-        _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-        _grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-        _grid.MultiSelect = false;
-        _grid.EditMode = DataGridViewEditMode.EditOnEnter;
-        _grid.ColumnHeadersHeight = 38;
-        _grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        _grid.RowTemplate.Height = 33;
-        _grid.AutoGenerateColumns = false;
-        _grid.Columns.Add(new DataGridViewTextBoxColumn
-        { Name = "idx", HeaderText = Localizer.Text("Step"), ReadOnly = true, FillWeight = 55 });
-        _grid.Columns.Add(new DataGridViewTextBoxColumn
-        { Name = "start", HeaderText = Localizer.Text("Start"), DataPropertyName = nameof(SequenceStep.Start) });
-        _grid.Columns.Add(new DataGridViewTextBoxColumn
-        { Name = "end", HeaderText = Localizer.Text("End"), DataPropertyName = nameof(SequenceStep.End) });
-        _grid.Columns.Add(new DataGridViewTextBoxColumn
-        { Name = "duration", HeaderText = Localizer.Text("Duration"), DataPropertyName = nameof(SequenceStep.Duration) });
-        _grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "position", HeaderText = Localizer.Text("Position") });
-        _grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "mode", HeaderText = Localizer.Text("Mode"), ReadOnly = true });
-        _grid.Columns.Add(new DataGridViewTextBoxColumn { Name = "parameters", HeaderText = Localizer.Text("Parameters"), ReadOnly = true, FillWeight = 180 });
-        _grid.Columns[1].Visible = false;
-        _grid.Columns[2].Visible = false;
         _grid.DataSource = _rows;
         _grid.CellToolTipTextNeeded += (_, e) =>
         {
@@ -352,27 +212,21 @@ public sealed class MainForm : Form
         _hints.Set(vertical, "ResizePanels");
         _hints.Set(bottom, "ResizePanels");
 
-        var statusBar = new Panel { Dock = DockStyle.Fill, BackColor = _bg };
-        _status.Dock = DockStyle.Fill;
-        _status.ForeColor = Color.FromArgb(159, 178, 199);
-        _status.TextAlign = ContentAlignment.MiddleLeft;
-        _cursor.Dock = DockStyle.Right;
-        _cursor.Width = 240;
-        _cursor.TextAlign = ContentAlignment.MiddleRight;
-        _cursor.ForeColor = Color.FromArgb(255, 194, 94);
-        statusBar.Controls.Add(_status);
-        statusBar.Controls.Add(_cursor);
-        outer.Controls.Add(statusBar, 0, 2);
-
-        this.Shown += (s, e) =>
-        {
-            // vertical and bottom are fields or accessible variables
-            // safely set splitter distances after layout
-            vertical.SplitterDistance = 450; // or compute/clamp based on vertical.Height
-            bottom.SplitterDistance = 200; // or compute/clamp based on bottom.Width
-        };
     }
 
+    /// <summary>
+    /// Applies a button's runtime icon, localized caption and click action while preserving its designer layout.
+    /// </summary>
+    private void ConfigureActionButton(Button button, string key, Action action)
+    {
+        ButtonVisuals.Configure(button, key);
+        Translate(button, key);
+        button.Click += (_, _) => action();
+    }
+
+    /// <summary>
+    /// Connects editor changes and preview navigation, and arranges timer and connection cleanup on close.
+    /// </summary>
     private void WireEvents()
     {
         _channels.SelectedIndexChanged += (_, _) =>
@@ -466,6 +320,9 @@ public sealed class MainForm : Form
         FormClosed += (_, _) => { _search?.Cancel(); _writeTimer.Dispose(); _telemetryTimer.Dispose(); _hints.Dispose(); _connection?.Dispose(); _connection = null; };
     }
 
+    /// <summary>
+    /// Normalizes cyclic playback and binds the current device configuration without treating loading as an edit.
+    /// </summary>
     private void BindDevice()
     {
         SequenceService.EnsureCyclic(_device);
@@ -478,6 +335,11 @@ public sealed class MainForm : Form
         if (_connection is null) SetStatus("Ready");
     }
 
+    /// <summary>
+    /// Switches the editor to a channel using cloned step rows, preserving pending valid edits when requested.
+    /// </summary>
+    /// <param name="channel">One-based channel number, from 1 to 28.</param>
+    /// <param name="commit">Whether to commit the current grid before changing selection.</param>
     private void SelectChannel(int channel, bool commit = true)
     {
         if (_loading || channel is < 1 or > 28) return;
@@ -497,6 +359,9 @@ public sealed class MainForm : Form
 
     private ChannelSequence Current => _device.Channels[_selected - 1];
 
+    /// <summary>
+    /// Copies changed editor rows into the selected channel and refreshes dirty state and previews.
+    /// </summary>
     private void PersistRows()
     {
         if (Current.Steps.Count == _rows.Count && Current.Steps.Zip(_rows).All(pair =>
@@ -528,6 +393,9 @@ public sealed class MainForm : Form
         _cursor.Text = Localizer.Text("Cursor", _timeline.CursorMs / 1000.0);
     }
 
+    /// <summary>
+    /// Updates a channel description while suppressing selection events raised by the list refresh.
+    /// </summary>
     private void UpdateChannelLabel(int channel)
     {
         if (_channels.Items.Count != 28) return;
@@ -545,6 +413,13 @@ public sealed class MainForm : Form
         }
     }
 
+    /// <summary>
+    /// Converts a dragged timeline endpoint into a step duration and, for ramps, matching boundary values.
+    /// </summary>
+    /// <param name="channel">One-based channel number.</param>
+    /// <param name="step">Zero-based step index within the channel.</param>
+    /// <param name="time">Endpoint position in milliseconds from the start of the channel sequence.</param>
+    /// <param name="value">Ramp brightness percentage at the endpoint.</param>
     private void MovePoint(int channel, int step, long time, int value)
     {
         if (!CommitGrid()) return;
@@ -581,6 +456,8 @@ public sealed class MainForm : Form
         BindStepEditor();
     }
 
+    /// <summary>Ends grid editing and persists rows only when the current cell can be committed.</summary>
+    /// <returns>Whether it is safe to continue an action that depends on the edited values.</returns>
     private bool CommitGrid()
     {
         if (!_grid.EndEdit()) return false;
@@ -743,6 +620,9 @@ public sealed class MainForm : Form
         UpdateConnectionButton();
     }
 
+    /// <summary>
+    /// Cancels an active search, disconnects the current board, or discovers a board and loads its configuration.
+    /// </summary>
     private async Task ToggleConnectionAsync()
     {
         if (_search is not null) { _search.Cancel(); return; }
@@ -792,6 +672,9 @@ public sealed class MainForm : Form
         }
     }
 
+    /// <summary>
+    /// Stops live writes and telemetry before releasing the board connection and updating offline UI state.
+    /// </summary>
     private void DisconnectBoard()
     {
         _telemetryTimer.Stop(); _ledPreview.SetOnline(false); _boardState.Text = ""; _boardState.Visible = false;
@@ -803,8 +686,13 @@ public sealed class MainForm : Form
         SetStatus("BoardDisconnected");
     }
 
+    /// <summary>Clones the configuration so asynchronous board writes do not observe subsequent editor changes.</summary>
     private DeviceSequences Snapshot() => new() { Channels = _device.Channels.Select(c => c.Clone(c.ChannelNumber)).ToList() };
 
+    /// <summary>
+    /// Serializes a board action with configuration writes and applies the required configuration before execution.
+    /// </summary>
+    /// <param name="command">Board action, or <see langword="null"/> to apply the configuration only.</param>
     private async Task HardwareActionAsync(BoardCommand? command)
     {
         var connection = _connection;
@@ -824,6 +712,10 @@ public sealed class MainForm : Form
         finally { _writing = false; UpdateConnectionButton(); }
     }
 
+    /// <summary>
+    /// Reads PWM and playback state without overlapping another telemetry read or a configuration write.
+    /// </summary>
+    /// <remarks>Results from a disposed form or a replaced connection are ignored.</remarks>
     private async Task ReadTelemetryAsync()
     {
         var connection = _connection;
@@ -849,6 +741,9 @@ public sealed class MainForm : Form
         finally { _readingTelemetry = false; }
     }
 
+    /// <summary>
+    /// Releases the normal board connection before opening the bootloader wizard with the previous port as a hint.
+    /// </summary>
     private void OpenFirmwareWizard()
     {
         if (_writing || _search is not null || !CommitGrid()) return;
@@ -858,12 +753,16 @@ public sealed class MainForm : Form
         wizard.ShowDialog(this);
     }
 
+    /// <summary>Restarts the live-write delay when connected, live updates are enabled and no model load is active.</summary>
     private void QueueOnlineWrite()
     {
         if (_connection is null || !_live.Checked || _loading) return;
         _writeTimer.Stop(); _writeTimer.Start();
     }
 
+    /// <summary>
+    /// Sends a configuration snapshot to the current board and distinguishes validation errors from connection loss.
+    /// </summary>
     private async Task ApplyOnlineAsync()
     {
         var connection = _connection;
@@ -893,11 +792,7 @@ public sealed class MainForm : Form
         finally { _writing = false; if (!IsDisposed) UpdateConnectionButton(); }
     }
 
-    private void InitializeComponent()
-    {
-
-    }
-
+    /// <summary>Exports committed editor values using the Modbus register CSV representation.</summary>
     private void ExportCsv()
     {
         if (!CommitGrid()) return;

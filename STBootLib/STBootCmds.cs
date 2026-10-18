@@ -2,6 +2,7 @@
 namespace OBLSequenceStudio.STBootLib
 {
     /* command list */
+    /// <summary>STM32 bootloader wire command bytes; names and numeric values preserve the embedded library protocol API.</summary>
     public enum STCmds
     {
         /* this is used by bootloader to determine the baudrate */
@@ -40,6 +41,7 @@ namespace OBLSequenceStudio.STBootLib
     }
 
     /* special erase mode for normal erase command */
+    /// <summary>Special erase selector for the classic one-byte erase command.</summary>
     public enum STEraseMode
     {
         /* erase all sectors */
@@ -47,6 +49,7 @@ namespace OBLSequenceStudio.STBootLib
     }
 
     /* special erase mode for normal erase command */
+    /// <summary>Special erase selectors for the extended two-byte erase command.</summary>
     public enum STExtendedEraseMode
     {
         /* erase all sectors */

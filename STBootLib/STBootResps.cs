@@ -2,6 +2,7 @@
 namespace OBLSequenceStudio.STBootLib
 {
     /* response codes*/
+    /// <summary>STM32 bootloader acknowledgement bytes used to accept or reject command phases.</summary>
     public enum STResps
     {
         /* command accepted */

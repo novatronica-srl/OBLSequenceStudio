@@ -7,6 +7,7 @@ using OBLSequenceStudio.Services;
 
 namespace OBLSequenceStudio.Controls;
 
+/// <summary>Displays channel LED colors with either local simulated brightness or live hardware PWM readings.</summary>
 public sealed class LedPreviewControl : UserControl
 {
     private readonly UiHints _hints = new();
@@ -22,16 +23,24 @@ public sealed class LedPreviewControl : UserControl
     private DeviceSequences? _device;
     private long _position;
     private int[] _hardwarePwm = new int[28];
+    /// <summary>Enables hardware preview when connected and clears stale PWM readings when disconnected.</summary>
     public void SetOnline(bool online) { _firmware.Enabled = online; _firmware.Checked = online; if (!online) _hardwarePwm = new int[28]; RenderFrame(); }
+    /// <summary>Copies and clamps channel PWM percentages before refreshing the displayed frame.</summary>
     public void SetHardwareValues(int[] pwm) { _hardwarePwm = pwm.Select(v => Math.Clamp(v, 0, 100)).ToArray(); RenderFrame(); }
+    /// <summary>Reports local playback position in milliseconds after timer ticks or seeking.</summary>
     public event Action<long>? TimeChanged;
+    /// <summary>Reports a clicked LED using its one-based channel number.</summary>
     public event Action<int>? ChannelSelected;
+    /// <summary>Reports a changed preview color so the editor can mark its configuration dirty.</summary>
     public event Action? ConfigurationChanged;
+    /// <summary>Current local playback position in milliseconds, including time since the most recent resume.</summary>
     [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public long Position => _position + _clock.ElapsedMilliseconds;
+    /// <summary>Whether the local simulation clock is advancing.</summary>
     [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public bool IsPlaying => _clock.IsRunning;
 
+    /// <summary>Creates playback controls and the LED canvas and attaches preview interaction handlers.</summary>
     public LedPreviewControl()
     {
         ButtonVisuals.Configure(_play, "Play");
@@ -85,19 +94,25 @@ public sealed class LedPreviewControl : UserControl
         };
     }
 
+    /// <summary>Binds a configuration, resetting playback only when the configuration instance changes.</summary>
     public void SetDevice(DeviceSequences device)
     {
         if (!ReferenceEquals(device, _device)) { _device = device; Seek(0); }
         RenderFrame();
     }
+    /// <summary>Highlights a one-based channel and updates its preview-color action.</summary>
     public void SelectChannel(int channel) { _canvas.SelectedChannel = channel; UpdateColorButton(); _canvas.Invalidate(); }
+    /// <summary>Resumes local simulation when a device is bound and hardware PWM preview is not selected.</summary>
     public void Play() { if (_device is null || IsPlaying || _firmware.Checked) return; _clock.Start(); _timer.Start(); RenderFrame(); ApplyLanguage(); }
+    /// <summary>Stops local simulation while preserving its accumulated playback position.</summary>
     public void Pause() { _position = Position; _clock.Reset(); _timer.Stop(); RenderFrame(); ApplyLanguage(); }
+    /// <summary>Resolves a channel preview color or the default amber color when no matching channel is bound.</summary>
     public Color GetLedColor(int channel)
     {
         string value = _device?.Channels.FirstOrDefault(c => c.ChannelNumber == channel)?.LedColor ?? "#FFB328";
         return ColorTranslator.FromHtml(value);
     }
+    /// <summary>Updates a channel preview-only RGB color and notifies the editor when its value changes.</summary>
     public void SetLedColor(int channel, Color color)
     {
         var sequence = _device?.Channels.FirstOrDefault(c => c.ChannelNumber == channel);
@@ -119,11 +134,14 @@ public sealed class LedPreviewControl : UserControl
         _color.FlatAppearance.MouseDownBackColor = color;
         ButtonVisuals.SetIcon(_color, "Color");
     }
+    /// <summary>Pauses playback and clears fire history before evaluating the requested position.</summary>
+    /// <param name="position">Playback time in milliseconds; negative values are clamped to zero.</param>
     public void Seek(long position)
     {
         _timer.Stop(); _clock.Reset(); _position = Math.Max(0, position); _engine.Reset();
         RenderFrame(); ApplyLanguage(); TimeChanged?.Invoke(Position);
     }
+    /// <summary>Refreshes preview captions, tooltips and play/pause imagery for the current language and playback state.</summary>
     public void ApplyLanguage()
     {
         _hints.Refresh();
@@ -138,6 +156,7 @@ public sealed class LedPreviewControl : UserControl
         _canvas.Invalidate();
         UpdateColorButton();
     }
+    /// <summary>Selects real PWM or simulated values and redraws the canvas without changing hardware playback.</summary>
     private void RenderFrame()
     {
         _canvas.Values = _firmware.Checked ? _hardwarePwm : _engine.Evaluate(_device, Position);
@@ -145,12 +164,14 @@ public sealed class LedPreviewControl : UserControl
         _time.Text = _firmware.Checked ? Localizer.Text("HardwareLive") : Localizer.Text("PreviewTime", Position / 1000.0);
         _canvas.Invalidate();
     }
+    /// <summary>Stops the local clock and releases timer and tooltip resources.</summary>
     protected override void Dispose(bool disposing)
     {
         if (disposing) { _hints.Dispose(); _timer.Dispose(); _clock.Stop(); }
         base.Dispose(disposing);
     }
 
+    /// <summary>Paints preview LEDs and performs pointer hit testing for channel selection.</summary>
     private sealed class LedCanvas : Control
     {
         [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]

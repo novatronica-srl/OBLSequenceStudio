@@ -3,6 +3,7 @@ using System.IO.Ports;
 
 namespace OBLSequenceStudio.STBootLib
 {
+    /// <summary>Implements the STM32 serial bootloader command protocol over an owned serial port.</summary>
     public class STBoot : IDisposable
     {
         /* serial port */
@@ -15,12 +16,15 @@ namespace OBLSequenceStudio.STBootLib
 
 
         /* bootloader version */
+        /// <summary>Bootloader version populated by the initialization handshake.</summary>
         public string Version;
         /* product id */
+        /// <summary>Device product identifier populated by the GET_ID command.</summary>
         public ushort ProductID;
         
 
         /* constructor */
+        /// <summary>Creates a command gate; opening the serial port is a separate operation.</summary>
         public STBoot()
         {
             Commands = new List<STCmds>();
@@ -29,6 +33,7 @@ namespace OBLSequenceStudio.STBootLib
         }
 
         /* dispose implementation */
+        /// <summary>Closes the owned port and releases the command semaphore once.</summary>
         public void Dispose()
         {
             if (disposed) return;
@@ -39,6 +44,9 @@ namespace OBLSequenceStudio.STBootLib
         }
 
         /* open serial port */
+        /// <summary>Opens an 8E1 serial connection with one-second read and write timeouts and clears its buffers.</summary>
+        /// <param name="portName">Serial port of a board already started in its bootloader.</param>
+        /// <param name="baudRate">Serial bit rate used for bootloader autobaud.</param>
         public void Open(string portName, uint baudRate)
         {
             /* initialize serial port */
@@ -52,6 +60,7 @@ namespace OBLSequenceStudio.STBootLib
         }
 
         /* close */
+        /// <summary>Closes the owned serial port without disposing the command gate.</summary>
         public void Close()
         {
             /* close permitted? */
@@ -59,6 +68,7 @@ namespace OBLSequenceStudio.STBootLib
         }
 
         /* initialize communication */
+        /// <summary>Performs autobaud, reads supported commands and version, and discovers the product identifier.</summary>
         public async Task Initialize()
         {
             /* perform autobauding */
@@ -77,6 +87,7 @@ namespace OBLSequenceStudio.STBootLib
         }
 
         /* unprotect memory */
+        /// <summary>Requests read and write unprotection when supported; these commands may erase memory and reset the target.</summary>
         public async Task Unprotect()
         {
             /* no support for unprotect? */
@@ -92,6 +103,13 @@ namespace OBLSequenceStudio.STBootLib
         }
 
         /* read memory */
+        /// <summary>Reads memory in chunks of at most 256 bytes, observing cancellation between chunks.</summary>
+        /// <param name="address">Initial target memory address.</param>
+        /// <param name="buf">Destination buffer.</param>
+        /// <param name="offset">Initial destination offset in bytes.</param>
+        /// <param name="size">Number of bytes to read.</param>
+        /// <param name="p">Optional cumulative byte progress.</param>
+        /// <param name="ct">Cancellation checked between chunk operations.</param>
         public async Task ReadMemory(uint address, byte[] buf, int offset, 
             int size, IProgress<int> p, CancellationToken ct)
         {
@@ -124,6 +142,14 @@ namespace OBLSequenceStudio.STBootLib
         }
 
         /* write memory */
+        /// <summary>Writes memory in chunks of at most 256 bytes with four-byte address and length alignment.</summary>
+        /// <param name="address">Word-aligned target memory address.</param>
+        /// <param name="buf">Source buffer, including any required alignment padding.</param>
+        /// <param name="offset">Initial source offset in bytes.</param>
+        /// <param name="size">Positive multiple of four bytes to write.</param>
+        /// <param name="p">Optional processed and total byte progress.</param>
+        /// <param name="ct">Cancellation checked between chunk operations.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Alignment, length or source-buffer bounds are invalid.</exception>
         public async Task WriteMemory(uint address, byte[] buf, int offset,
             int size, IProgress<STBootProgress> p, CancellationToken ct)
         {
@@ -159,6 +185,7 @@ namespace OBLSequenceStudio.STBootLib
         }
 
         /* erase page */
+        /// <summary>Erases one page using the classic or extended command supported by the bootloader.</summary>
         public async Task ErasePage(uint pageNumber)
         {
             /* 'classic' erase operation supported? */
@@ -174,6 +201,7 @@ namespace OBLSequenceStudio.STBootLib
         }
 
         /* perform global erase */
+        /// <summary>Erases all flash using the supported special erase sequence and its longer acknowledgement timeout.</summary>
         public async Task GlobalErase()
         {
             /* 'classic' erase operation supported? */
@@ -189,6 +217,7 @@ namespace OBLSequenceStudio.STBootLib
         }
 
         /* jump to user code */
+        /// <summary>Requests execution at the target address when the bootloader supports GO.</summary>
         public async Task Jump(uint address)
         {
             /* no support for go? */
@@ -832,6 +861,7 @@ namespace OBLSequenceStudio.STBootLib
         }
 
         /* compute checksum */
+        /// <summary>Computes the protocol checksum by XORing the selected bytes with an initial value of 0xFF.</summary>
         private byte ComputeChecksum(byte[] data, int offset, int count)
         {
             /* initial value */
@@ -845,6 +875,7 @@ namespace OBLSequenceStudio.STBootLib
         }
 
         private Stream testTransport;
+        /// <summary>Uses a caller-provided transport for protocol validation without opening a physical serial port.</summary>
         internal STBoot(Stream transport) : this() { testTransport = transport; }
         private Task SerialWrite(byte[] data, int offset, int count)
         {
@@ -854,6 +885,7 @@ namespace OBLSequenceStudio.STBootLib
             });
         }
         private Task SerialRead(byte[] data, int offset, int count) => SerialRead(data, offset, count, 1000);
+        /// <summary>Accumulates a complete response on a worker, rejecting EOF and enforcing the millisecond read deadline.</summary>
         private Task SerialRead(byte[] data, int offset, int count, int timeout)
         {
             return Task.Run(() => {

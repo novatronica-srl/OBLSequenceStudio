@@ -1,0 +1,1738 @@
+{
+  "Language": [
+    "Lingua",
+    "Language",
+    "Idioma",
+    "Sprache",
+    "Langue"
+  ],
+  "New": [
+    "Nuovo",
+    "New",
+    "Nuevo",
+    "Neu",
+    "Nouveau"
+  ],
+  "Open": [
+    "Apri",
+    "Open",
+    "Abrir",
+    "Öffnen",
+    "Ouvrir"
+  ],
+  "Save": [
+    "Salva",
+    "Save",
+    "Guardar",
+    "Speichern",
+    "Enregistrer"
+  ],
+  "SaveAs": [
+    "Salva con nome",
+    "Save as",
+    "Guardar como",
+    "Speichern unter",
+    "Enregistrer sous"
+  ],
+  "Export": [
+    "Esporta sequenze CSV",
+    "Export sequences CSV",
+    "Exportar secuencias CSV",
+    "Sequenzen als CSV exportieren",
+    "Exporter les séquences CSV"
+  ],
+  "TimelineTitle": [
+    "TIMELINE MULTICANALE • BASE TEMPORALE COMUNE",
+    "MULTICHANNEL TIMELINE • SHARED TIME AXIS",
+    "LÍNEA DE TIEMPO MULTICANAL • EJE TEMPORAL COMÚN",
+    "MEHRKANAL-ZEITLEISTE • GEMEINSAME ZEITACHSE",
+    "CHRONOLOGIE MULTICANAL • AXE TEMPOREL COMMUN"
+  ],
+  "TimelineHelp": [
+    "Clic su uno step: modifica i parametri • Trascina il punto finale: modifica la durata • Fuoco: anteprima indicativa",
+    "Click a step: edit parameters • Drag its end point: change duration • Fire preview is schematic",
+    "Clic en un paso: editar parámetros • Arrastrar el punto final: cambiar duración • Vista del fuego orientativa",
+    "Schritt anklicken: Parameter bearbeiten • Endpunkt ziehen: Dauer ändern • Feuer schematisch dargestellt",
+    "Cliquer sur une étape : modifier les paramètres • Glisser son point final : modifier la durée • Feu indicatif"
+  ],
+  "Channels": [
+    "CANALI",
+    "CHANNELS",
+    "CANALES",
+    "KANÄLE",
+    "CANAUX"
+  ],
+  "ChannelName": [
+    "Canale {0:00}",
+    "Channel {0:00}",
+    "Canal {0:00}",
+    "Kanal {0:00}",
+    "Canal {0:00}"
+  ],
+  "ChannelShort": [
+    "CH {0:00}",
+    "CH {0:00}",
+    "CAN {0:00}",
+    "KAN {0:00}",
+    "CAN {0:00}"
+  ],
+  "ChannelList": [
+    "CH {0:00} • {1} step",
+    "CH {0:00} • {1} steps",
+    "CAN {0:00} • {1} pasos",
+    "KAN {0:00} • {1} Schritte",
+    "CAN {0:00} • {1} étapes"
+  ],
+  "Summary": [
+    "CH {0:00} • {1}/10 step • {2:0.000} s",
+    "CH {0:00} • {1}/10 steps • {2:0.000} s",
+    "CAN {0:00} • {1}/10 pasos • {2:0.000} s",
+    "KAN {0:00} • {1}/10 Schritte • {2:0.000} s",
+    "CAN {0:00} • {1}/10 étapes • {2:0.000} s"
+  ],
+  "AddStep": [
+    "+ Step",
+    "+ Step",
+    "+ Paso",
+    "+ Schritt",
+    "+ Étape"
+  ],
+  "DeleteStep": [
+    "Elimina step",
+    "Delete step",
+    "Eliminar paso",
+    "Schritt löschen",
+    "Supprimer l’étape"
+  ],
+  "Clear": [
+    "Svuota",
+    "Clear",
+    "Vaciar",
+    "Leeren",
+    "Vider"
+  ],
+  "Copy": [
+    "Copia →",
+    "Copy →",
+    "Copiar →",
+    "Kopieren →",
+    "Copier →"
+  ],
+  "Step": [
+    "STEP",
+    "STEP",
+    "PASO",
+    "SCHRITT",
+    "ÉTAPE"
+  ],
+  "Start": [
+    "INIZIO (%)",
+    "START (%)",
+    "INICIO (%)",
+    "ANFANG (%)",
+    "DÉBUT (%)"
+  ],
+  "End": [
+    "FINE (%)",
+    "END (%)",
+    "FIN (%)",
+    "ENDE (%)",
+    "FIN (%)"
+  ],
+  "Duration": [
+    "DURATA (ms)",
+    "DURATION (ms)",
+    "DURACIÓN (ms)",
+    "DAUER (ms)",
+    "DURÉE (ms)"
+  ],
+  "Position": [
+    "POSIZIONE FINALE (ms)",
+    "END POSITION (ms)",
+    "POSICIÓN FINAL (ms)",
+    "ENDPOSITION (ms)",
+    "POSITION FINALE (ms)"
+  ],
+  "Cursor": [
+    "Cursore: {0:0.000} s",
+    "Cursor: {0:0.000} s",
+    "Cursor: {0:0.000} s",
+    "Zeitzeiger: {0:0.000} s",
+    "Curseur : {0:0.000} s"
+  ],
+  "AllowedRange": [
+    "Valore ammesso: {0}–{1}",
+    "Allowed value: {0}–{1}",
+    "Valor permitido: {0}–{1}",
+    "Zulässiger Wert: {0}–{1}",
+    "Valeur autorisée : {0}–{1}"
+  ],
+  "CellError": [
+    "Impossibile visualizzare o acquisire il valore della cella.",
+    "Unable to display or accept the cell value.",
+    "No se puede mostrar o aceptar el valor de la celda.",
+    "Der Zellenwert kann nicht angezeigt oder übernommen werden.",
+    "Impossible d’afficher ou d’accepter la valeur de la cellule."
+  ],
+  "Ready": [
+    "Pronto • Modalità offline (nessuna scrittura Modbus attiva)",
+    "Ready • Offline mode (no active Modbus writes)",
+    "Listo • Modo sin conexión (sin escrituras Modbus activas)",
+    "Bereit • Offline-Modus (keine aktiven Modbus-Schreibvorgänge)",
+    "Prêt • Mode hors ligne (aucune écriture Modbus active)"
+  ],
+  "Untitled": [
+    "Senza nome",
+    "Untitled",
+    "Sin título",
+    "Unbenannt",
+    "Sans titre"
+  ],
+  "MaxSteps": [
+    "Massimo 10 step per canale.",
+    "Maximum 10 steps per channel.",
+    "Máximo 10 pasos por canal.",
+    "Maximal 10 Schritte pro Kanal.",
+    "Maximum 10 étapes par canal."
+  ],
+  "ClearConfirm": [
+    "Svuotare tutti gli step del CH {0:00}?",
+    "Clear all steps from CH {0:00}?",
+    "¿Vaciar todos los pasos del CAN {0:00}?",
+    "Alle Schritte von KAN {0:00} löschen?",
+    "Vider toutes les étapes du CAN {0:00} ?"
+  ],
+  "Confirm": [
+    "Conferma",
+    "Confirm",
+    "Confirmar",
+    "Bestätigen",
+    "Confirmer"
+  ],
+  "DifferentChannel": [
+    "Scegli un canale diverso.",
+    "Choose a different channel.",
+    "Elige otro canal.",
+    "Bitte einen anderen Kanal auswählen.",
+    "Choisissez un autre canal."
+  ],
+  "CopyConfirm": [
+    "Sovrascrivere CH {0:00} con la sequenza del CH {1:00}?",
+    "Overwrite CH {0:00} with the sequence from CH {1:00}?",
+    "¿Sobrescribir CAN {0:00} con la secuencia del CAN {1:00}?",
+    "KAN {0:00} mit der Sequenz von KAN {1:00} überschreiben?",
+    "Remplacer CAN {0:00} par la séquence du CAN {1:00} ?"
+  ],
+  "CopyTitle": [
+    "Copia canale",
+    "Copy channel",
+    "Copiar canal",
+    "Kanal kopieren",
+    "Copier le canal"
+  ],
+  "DiscardConfirm": [
+    "Ci sono modifiche non salvate. Continuare senza salvare?",
+    "There are unsaved changes. Continue without saving?",
+    "Hay cambios sin guardar. ¿Continuar sin guardar?",
+    "Es gibt ungespeicherte Änderungen. Ohne Speichern fortfahren?",
+    "Des modifications ne sont pas enregistrées. Continuer sans enregistrer ?"
+  ],
+  "Unsaved": [
+    "Modifiche non salvate",
+    "Unsaved changes",
+    "Cambios sin guardar",
+    "Ungespeicherte Änderungen",
+    "Modifications non enregistrées"
+  ],
+  "JsonFilter": [
+    "Sequenze JSON (*.json)|*.json",
+    "JSON sequences (*.json)|*.json",
+    "Secuencias JSON (*.json)|*.json",
+    "JSON-Sequenzen (*.json)|*.json",
+    "Séquences JSON (*.json)|*.json"
+  ],
+  "CsvFilter": [
+    "File CSV (*.csv)|*.csv",
+    "CSV files (*.csv)|*.csv",
+    "Archivos CSV (*.csv)|*.csv",
+    "CSV-Dateien (*.csv)|*.csv",
+    "Fichiers CSV (*.csv)|*.csv"
+  ],
+  "LoadError": [
+    "Errore caricamento",
+    "Loading error",
+    "Error de carga",
+    "Fehler beim Laden",
+    "Erreur de chargement"
+  ],
+  "SaveError": [
+    "Errore salvataggio",
+    "Saving error",
+    "Error al guardar",
+    "Fehler beim Speichern",
+    "Erreur d’enregistrement"
+  ],
+  "ExportError": [
+    "Errore esportazione",
+    "Export error",
+    "Error de exportación",
+    "Fehler beim Exportieren",
+    "Erreur d’exportation"
+  ],
+  "Saved": [
+    "Salvato: {0}",
+    "Saved: {0}",
+    "Guardado: {0}",
+    "Gespeichert: {0}",
+    "Enregistré : {0}"
+  ],
+  "Exported": [
+    "Sequenze esportate: {0} • modalità e parametri inclusi",
+    "Sequences exported: {0} • modes and parameters included",
+    "Secuencias exportadas: {0} • modos y parámetros incluidos",
+    "Sequenzen exportiert: {0} • Modi und Parameter enthalten",
+    "Séquences exportées : {0} • modes et paramètres inclus"
+  ],
+  "ChannelValidation": [
+    "Il file deve contenere esattamente i canali 1–28.",
+    "The file must contain exactly channels 1–28.",
+    "El archivo debe contener exactamente los canales 1–28.",
+    "Die Datei muss genau die Kanäle 1–28 enthalten.",
+    "Le fichier doit contenir exactement les canaux 1–28."
+  ],
+  "StepValidation": [
+    "CH {0:00}: massimo 10 step.",
+    "CH {0:00}: maximum 10 steps.",
+    "CAN {0:00}: máximo 10 pasos.",
+    "KAN {0:00}: maximal 10 Schritte.",
+    "CAN {0:00} : maximum 10 étapes."
+  ],
+  "RangeValidation": [
+    "CH {0:00}: Inizio/Fine 0–100, Durata 10–60000 ms.",
+    "CH {0:00}: Start/End 0–100, Duration 10–60000 ms.",
+    "CAN {0:00}: Inicio/Fin 0–100, Duración 10–60000 ms.",
+    "KAN {0:00}: Anfang/Ende 0–100, Dauer 10–60000 ms.",
+    "CAN {0:00} : Début/Fin 0–100, Durée 10–60000 ms."
+  ],
+  "InvalidJson": [
+    "File JSON non valido.",
+    "Invalid JSON file.",
+    "Archivo JSON no válido.",
+    "Ungültige JSON-Datei.",
+    "Fichier JSON non valide."
+  ],
+  "TooManySteps": [
+    "Troppi step.",
+    "Too many steps.",
+    "Demasiados pasos.",
+    "Zu viele Schritte.",
+    "Trop d’étapes."
+  ],
+  "StepOutOfRange": [
+    "Step {0} fuori intervallo.",
+    "Step {0} is out of range.",
+    "El paso {0} está fuera del intervalo.",
+    "Schritt {0} liegt außerhalb des zulässigen Bereichs.",
+    "L’étape {0} est hors des limites autorisées."
+  ],
+  "FileError": [
+    "Impossibile accedere al file: {0}",
+    "Unable to access the file: {0}",
+    "No se puede acceder al archivo: {0}",
+    "Auf die Datei kann nicht zugegriffen werden: {0}",
+    "Impossible d’accéder au fichier : {0}"
+  ],
+  "UnexpectedError": [
+    "Operazione non riuscita.",
+    "The operation failed.",
+    "La operación ha fallado.",
+    "Der Vorgang ist fehlgeschlagen.",
+    "L’opération a échoué."
+  ],
+  "Yes": [
+    "Sì",
+    "Yes",
+    "Sí",
+    "Ja",
+    "Oui"
+  ],
+  "No": [
+    "No",
+    "No",
+    "No",
+    "Nein",
+    "Non"
+  ],
+  "OK": [
+    "OK",
+    "OK",
+    "Aceptar",
+    "OK",
+    "OK"
+  ],
+  "PreferenceError": [
+    "Lingua applicata, ma impossibile salvare la preferenza.",
+    "Language applied, but the preference could not be saved.",
+    "Idioma aplicado, pero no se pudo guardar la preferencia.",
+    "Sprache angewendet, aber die Einstellung konnte nicht gespeichert werden.",
+    "Langue appliquée, mais la préférence n’a pas pu être enregistrée."
+  ],
+  "Mode": [
+    "Modalità",
+    "Mode",
+    "Modo",
+    "Modus",
+    "Mode"
+  ],
+  "ModeRamp": [
+    "Rampa",
+    "Ramp",
+    "Rampa",
+    "Rampe",
+    "Rampe"
+  ],
+  "ModeFixed": [
+    "Luce fissa",
+    "Steady light",
+    "Luz fija",
+    "Dauerlicht",
+    "Lumière fixe"
+  ],
+  "ModeFire": [
+    "Fuoco",
+    "Fire",
+    "Fuego",
+    "Feuer",
+    "Feu"
+  ],
+  "ModePulse": [
+    "Pulsazione",
+    "Pulse",
+    "Pulsación",
+    "Pulsieren",
+    "Pulsation"
+  ],
+  "ModeFlash": [
+    "Flash",
+    "Flash",
+    "Destello",
+    "Blitz",
+    "Flash"
+  ],
+  "Parameters": [
+    "Parametri",
+    "Parameters",
+    "Parámetros",
+    "Parameter",
+    "Paramètres"
+  ],
+  "SelectStep": [
+    "Seleziona uno step",
+    "Select a step",
+    "Selecciona un paso",
+    "Schritt auswählen",
+    "Sélectionnez une étape"
+  ],
+  "Brightness": [
+    "Luminosità (%)",
+    "Brightness (%)",
+    "Brillo (%)",
+    "Helligkeit (%)",
+    "Luminosité (%)"
+  ],
+  "Minimum": [
+    "Minimo (%)",
+    "Minimum (%)",
+    "Mínimo (%)",
+    "Minimum (%)",
+    "Minimum (%)"
+  ],
+  "Maximum": [
+    "Massimo (%)",
+    "Maximum (%)",
+    "Máximo (%)",
+    "Maximum (%)",
+    "Maximum (%)"
+  ],
+  "Cycle": [
+    "Periodo (ms)",
+    "Period (ms)",
+    "Periodo (ms)",
+    "Periode (ms)",
+    "Période (ms)"
+  ],
+  "Duty": [
+    "Duty cycle (%)",
+    "Duty cycle (%)",
+    "Ciclo de trabajo (%)",
+    "Tastgrad (%)",
+    "Rapport cyclique (%)"
+  ],
+  "Mean": [
+    "Luminosità media (%)",
+    "Mean brightness (%)",
+    "Brillo medio (%)",
+    "Mittlere Helligkeit (%)",
+    "Luminosité moyenne (%)"
+  ],
+  "StdDev": [
+    "Deviazione standard (%)",
+    "Standard deviation (%)",
+    "Desviación estándar (%)",
+    "Standardabweichung (%)",
+    "Écart-type (%)"
+  ],
+  "Filter": [
+    "Filtro (%)",
+    "Filter (%)",
+    "Filtro (%)",
+    "Filter (%)",
+    "Filtre (%)"
+  ],
+  "Refresh": [
+    "Aggiornamento (ms)",
+    "Refresh time (ms)",
+    "Actualización (ms)",
+    "Aktualisierung (ms)",
+    "Actualisation (ms)"
+  ],
+  "Preset": [
+    "Preset",
+    "Preset",
+    "Preajuste",
+    "Voreinstellung",
+    "Préréglage"
+  ],
+  "Custom": [
+    "Personalizzato",
+    "Custom",
+    "Personalizado",
+    "Benutzerdefiniert",
+    "Personnalisé"
+  ],
+  "Candle": [
+    "Candela",
+    "Candle",
+    "Vela",
+    "Kerze",
+    "Bougie"
+  ],
+  "Fireplace": [
+    "Caminetto",
+    "Fireplace",
+    "Chimenea",
+    "Kamin",
+    "Cheminée"
+  ],
+  "Torch": [
+    "Torcia",
+    "Torch",
+    "Antorcha",
+    "Fackel",
+    "Torche"
+  ],
+  "Repeat": [
+    "Ripeti sequenza",
+    "Repeat sequence",
+    "Repetir secuencia",
+    "Sequenz wiederholen",
+    "Répéter la séquence"
+  ],
+  "SingleStep": [
+    "Un solo step",
+    "Single step",
+    "Un solo paso",
+    "Einzelschritt",
+    "Une seule étape"
+  ],
+  "SingleStepConfirm": [
+    "Sostituire la sequenza con il solo step selezionato?",
+    "Replace the sequence with only the selected step?",
+    "¿Sustituir la secuencia por el paso seleccionado?",
+    "Sequenz durch den ausgewählten Schritt ersetzen?",
+    "Remplacer la séquence par la seule étape sélectionnée ?"
+  ],
+  "EffectValidation": [
+    "CH {0:00}: parametri non validi nello step {1}. Verificare min ≤ max, percentuali 0–100, periodo 100–10000 ms e refresh 1–10000 ms.",
+    "CH {0:00}: invalid parameters in step {1}. Check min ≤ max, percentages 0–100, period 100–10000 ms and refresh 1–10000 ms.",
+    "CAN {0:00}: parámetros no válidos en el paso {1}. Comprueba mín ≤ máx, porcentajes 0–100, periodo 100–10000 ms y actualización 1–10000 ms.",
+    "KAN {0:00}: ungültige Parameter in Schritt {1}. Min ≤ Max, Prozentwerte 0–100, Periode 100–10000 ms und Aktualisierung 1–10000 ms prüfen.",
+    "CAN {0:00} : paramètres invalides à l’étape {1}. Vérifiez min ≤ max, pourcentages 0–100, période 100–10000 ms et actualisation 1–10000 ms."
+  ],
+  "LegacyExportError": [
+    "Il formato registri precedente supporta solo rampe. Usare il CSV delle sequenze per conservare modalità e parametri.",
+    "The legacy register format supports ramps only. Use sequence CSV to preserve modes and parameters.",
+    "El formato de registros anterior solo admite rampas. Usa el CSV de secuencias para conservar modos y parámetros.",
+    "Das bisherige Registerformat unterstützt nur Rampen. Sequenz-CSV erhält Modi und Parameter.",
+    "L’ancien format de registres ne prend en charge que les rampes. Utilisez le CSV des séquences pour conserver modes et paramètres."
+  ],
+  "RampSummary": [
+    "{0}% → {1}%",
+    "{0}% → {1}%",
+    "{0}% → {1}%",
+    "{0}% → {1}%",
+    "{0}% → {1}%"
+  ],
+  "CycleSummary": [
+    "{0}–{1}%, periodo {2} ms",
+    "{0}–{1}%, period {2} ms",
+    "{0}–{1}%, periodo {2} ms",
+    "{0}–{1}%, Periode {2} ms",
+    "{0}–{1}%, période {2} ms"
+  ],
+  "FlashSummary": [
+    "{0}–{1}%, {2} ms, duty {3}%",
+    "{0}–{1}%, {2} ms, duty {3}%",
+    "{0}–{1}%, {2} ms, ciclo {3}%",
+    "{0}–{1}%, {2} ms, Tastgrad {3}%",
+    "{0}–{1}%, {2} ms, rapport {3}%"
+  ],
+  "FireSummary": [
+    "Media {0}%, σ {1}%, filtro {2}%, {3} ms",
+    "Mean {0}%, σ {1}%, filter {2}%, {3} ms",
+    "Media {0}%, σ {1}%, filtro {2}%, {3} ms",
+    "Mittel {0}%, σ {1}%, Filter {2}%, {3} ms",
+    "Moyenne {0}%, σ {1}%, filtre {2}%, {3} ms"
+  ],
+  "ImportProgrammer": [
+    "Importa configurazione XML",
+    "Import XML configuration",
+    "Importar configuración XML",
+    "XML-Konfiguration importieren",
+    "Importer une configuration XML"
+  ],
+  "ProgrammerFilter": [
+    "Configurazione OpenBrickLight (*.xml)|*.xml",
+    "OpenBrickLight configuration (*.xml)|*.xml",
+    "Configuración OpenBrickLight (*.xml)|*.xml",
+    "OpenBrickLight-Konfiguration (*.xml)|*.xml",
+    "Configuration OpenBrickLight (*.xml)|*.xml"
+  ],
+  "InvalidProgrammerConfig": [
+    "Configurazione XML OpenBrickLight non valida. Sono richiesti 224 registri.",
+    "Invalid OpenBrickLight XML configuration. Expected 224 registers.",
+    "Configuración XML OpenBrickLight no válida. Se requieren 224 registros.",
+    "Ungültige OpenBrickLight-XML-Konfiguration. 224 Register erforderlich.",
+    "Configuration XML OpenBrickLight non valide. 224 registres attendus."
+  ],
+  "UnsupportedProgrammerMode": [
+    "CH {0:00}: modalità {1} non supportata per importazione.",
+    "CH {0:00}: mode {1} is not supported for import.",
+    "CAN {0:00}: modo {1} no admitido para importar.",
+    "KAN {0:00}: Modus {1} wird beim Import nicht unterstützt.",
+    "CAN {0:00} : mode {1} non pris en charge pour l’importation."
+  ],
+  "LedPreview": [
+    "Anteprima LED virtuali",
+    "Virtual LED preview",
+    "Vista previa de LED virtuales",
+    "Virtuelle LED-Vorschau",
+    "Aperçu des LED virtuelles"
+  ],
+  "PlayPreview": [
+    "Riproduci",
+    "Play",
+    "Reproducir",
+    "Wiedergabe",
+    "Lire"
+  ],
+  "PausePreview": [
+    "Pausa",
+    "Pause",
+    "Pausa",
+    "Pause",
+    "Pause"
+  ],
+  "StopPreview": [
+    "Riavvolgi",
+    "Rewind",
+    "Rebobinar",
+    "Zurücksetzen",
+    "Revenir au début"
+  ],
+  "FirmwarePreview": [
+    "Simula il firmware attuale",
+    "Simulate current firmware",
+    "Simular el firmware actual",
+    "Aktuelle Firmware simulieren",
+    "Simuler le firmware actuel"
+  ],
+  "PreviewTime": [
+    "{0:0.000} s",
+    "{0:0.000} s",
+    "{0:0.000} s",
+    "{0:0.000} s",
+    "{0:0.000} s"
+  ],
+  "ChooseLedColor": [
+    "Colore LED...",
+    "LED color...",
+    "Color LED...",
+    "LED-Farbe...",
+    "Couleur LED..."
+  ],
+  "InvalidLedColor": [
+    "CH {0:00}: colore LED non valido. Usare #RRGGBB.",
+    "CH {0:00}: invalid LED color. Use #RRGGBB.",
+    "CAN {0:00}: color LED no válido. Usa #RRGGBB.",
+    "KAN {0:00}: ungültige LED-Farbe. #RRGGBB verwenden.",
+    "CAN {0:00} : couleur LED non valide. Utilisez #RRGGBB."
+  ],
+  "Connect": [
+    "Connetti scheda",
+    "Connect board",
+    "Conectar placa",
+    "Platine verbinden",
+    "Connecter la carte"
+  ],
+  "Disconnect": [
+    "Disconnetti",
+    "Disconnect",
+    "Desconectar",
+    "Trennen",
+    "Déconnecter"
+  ],
+  "CancelSearch": [
+    "Annulla ricerca",
+    "Cancel search",
+    "Cancelar búsqueda",
+    "Suche abbrechen",
+    "Annuler la recherche"
+  ],
+  "LiveChanges": [
+    "Modifiche live",
+    "Live changes",
+    "Cambios en vivo",
+    "Live-Änderungen",
+    "Modifications en direct"
+  ],
+  "SearchingBoard": [
+    "Ricerca scheda: {0}",
+    "Searching for board: {0}",
+    "Buscando placa: {0}",
+    "Platine suchen: {0}",
+    "Recherche de carte : {0}"
+  ],
+  "BoardNotFound": [
+    "Nessuna scheda compatibile trovata (PID 1, firmware 2.0, slave 1).",
+    "No compatible board found (PID 1, firmware 2.0, slave 1).",
+    "No se encontró una placa compatible (PID 1, firmware 2.0, esclavo 1).",
+    "Keine kompatible Platine gefunden (PID 1, Firmware 2.0, Slave 1).",
+    "Aucune carte compatible trouvée (PID 1, firmware 2.0, esclave 1)."
+  ],
+  "BoardConnected": [
+    "Online • {0} • configurazione letta dalla scheda",
+    "Online • {0} • configuration read from board",
+    "En línea • {0} • configuración leída de la placa",
+    "Online • {0} • Konfiguration von Platine gelesen",
+    "En ligne • {0} • configuration lue depuis la carte"
+  ],
+  "BoardDisconnected": [
+    "Offline • scheda disconnessa; configurazione mantenuta nell’editor",
+    "Offline • board disconnected; configuration retained in editor",
+    "Sin conexión • placa desconectada; configuración conservada",
+    "Offline • Platine getrennt; Konfiguration im Editor erhalten",
+    "Hors ligne • carte déconnectée ; configuration conservée"
+  ],
+  "SearchCancelled": [
+    "Ricerca annullata",
+    "Search cancelled",
+    "Búsqueda cancelada",
+    "Suche abgebrochen",
+    "Recherche annulée"
+  ],
+  "ConnectionFailed": [
+    "Connessione non riuscita. Controllare porta COM, collegamento e configurazione della scheda.",
+    "Connection failed. Check the COM port, connection and board configuration.",
+    "Error de conexión. Comprueba el puerto COM, el cable y la configuración.",
+    "Verbindung fehlgeschlagen. COM-Port, Verbindung und Konfiguration prüfen.",
+    "Échec de connexion. Vérifiez le port COM, le câble et la configuration."
+  ],
+  "ConnectionLost": [
+    "Connessione persa o scrittura non riuscita. Stato della scheda incerto: riconnettere per rileggere la configurazione.",
+    "Connection lost or write failed. Board state is uncertain: reconnect to read configuration again.",
+    "Conexión perdida o escritura fallida. Estado incierto: reconecta para releer la configuración.",
+    "Verbindung verloren oder Schreiben fehlgeschlagen. Zustand unklar: erneut verbinden und Konfiguration lesen.",
+    "Connexion perdue ou écriture échouée. État incertain : reconnectez pour relire la configuration."
+  ],
+  "OnlineUpdated": [
+    "Online • modifiche compatibili inviate alla scheda",
+    "Online • compatible changes sent to board",
+    "En línea • cambios compatibles enviados a la placa",
+    "Online • kompatible Änderungen gesendet",
+    "En ligne • modifications compatibles envoyées"
+  ],
+  "OnlineUnsupported": [
+    "Online • {0} canali modificati richiedono il nuovo firmware; mantenuti solo nell’editor",
+    "Online • {0} edited channels require new firmware; retained only in editor",
+    "En línea • {0} canales editados requieren nuevo firmware; solo en el editor",
+    "Online • {0} geänderte Kanäle benötigen neue Firmware; nur im Editor erhalten",
+    "En ligne • {0} canaux modifiés nécessitent le nouveau firmware ; conservés dans l’éditeur"
+  ],
+  "OnlineParameterError": [
+    "CH {0:00}: parametri non sicuri per il firmware attuale. In Pulsazione il refresh non deve superare il periodo.",
+    "CH {0:00}: unsafe parameters for current firmware. Pulse refresh must not exceed period.",
+    "CAN {0:00}: parámetros no seguros. En Pulsación la actualización no debe superar el periodo.",
+    "KAN {0:00}: unsichere Parameter. Puls-Aktualisierung darf die Periode nicht überschreiten.",
+    "CAN {0:00} : paramètres non sûrs. En Pulsation, l’actualisation ne doit pas dépasser la période."
+  ],
+  "OnlineValidation": [
+    "Online • modifica non inviata: {0}",
+    "Online • change not sent: {0}",
+    "En línea • cambio no enviado: {0}",
+    "Online • Änderung nicht gesendet: {0}",
+    "En ligne • modification non envoyée : {0}"
+  ],
+  "UnsupportedProtocol": [
+    "Serve firmware 2.0 con protocollo sequenze 2.0.",
+    "Firmware 2.0 with sequence protocol 2.0 is required.",
+    "Se requiere firmware 2.0 con protocolo de secuencias 2.0.",
+    "Firmware 2.0 mit Sequenzprotokoll 2.0 erforderlich.",
+    "Le firmware 2.0 avec le protocole de séquences 2.0 est requis."
+  ],
+  "BoardCommandError": [
+    "Comando rifiutato: codice {0}, step {1}, campo {2}.",
+    "Command rejected: code {0}, step {1}, field {2}.",
+    "Comando rechazado: código {0}, paso {1}, campo {2}.",
+    "Befehl abgelehnt: Code {0}, Schritt {1}, Feld {2}.",
+    "Commande refusée : code {0}, étape {1}, champ {2}."
+  ],
+  "BoardChangedDuringRead": [
+    "La configurazione è cambiata durante la lettura. Riconnettersi.",
+    "Configuration changed during reading. Reconnect.",
+    "La configuración cambió durante la lectura. Vuelva a conectar.",
+    "Konfiguration während des Lesens geändert. Erneut verbinden.",
+    "La configuration a changé pendant la lecture. Reconnectez-vous."
+  ],
+  "BoardAckTimeout": [
+    "La scheda non ha confermato il comando.",
+    "The board did not acknowledge the command.",
+    "La placa no confirmó el comando.",
+    "Die Platine hat den Befehl nicht bestätigt.",
+    "La carte n’a pas confirmé la commande."
+  ],
+  "BoardSaveTimeout": [
+    "Tempo scaduto durante il salvataggio EEPROM.",
+    "EEPROM save timed out.",
+    "Tiempo agotado al guardar en EEPROM.",
+    "Zeitüberschreitung beim EEPROM-Speichern.",
+    "Délai dépassé lors de l’enregistrement EEPROM."
+  ],
+  "FirmwareUpdate": [
+    "Aggiorna firmware…",
+    "Update firmware…",
+    "Actualizar firmware…",
+    "Firmware aktualisieren…",
+    "Mettre à jour le firmware…"
+  ],
+  "FirmwareImageInvalid": [
+    "Selezionare un file .bin valido per STM32F103CB (massimo 128 KB), compilato per 0x08000000.",
+    "Select a valid STM32F103CB .bin file (maximum 128 KB), built for 0x08000000.",
+    "Seleccione un archivo .bin válido para STM32F103CB (máximo 128 KB), compilado para 0x08000000.",
+    "Gültige STM32F103CB-.bin-Datei (maximal 128 KB) für 0x08000000 auswählen.",
+    "Sélectionnez un fichier .bin STM32F103CB valide (128 Ko maximum), compilé pour 0x08000000."
+  ],
+  "FirmwareTargetInvalid": [
+    "Scheda non supportata (ID 0x{0:X4}). È richiesto STM32F103 con 128 KB di flash.",
+    "Unsupported board (ID 0x{0:X4}). STM32F103 with 128 KB flash is required.",
+    "Placa no compatible (ID 0x{0:X4}). Se requiere STM32F103 con 128 KB de flash.",
+    "Nicht unterstützte Platine (ID 0x{0:X4}). STM32F103 mit 128 KB Flash erforderlich.",
+    "Carte non prise en charge (ID 0x{0:X4}). Un STM32F103 avec 128 Ko de flash est requis."
+  ],
+  "FirmwareReconnectBoot": [
+    "Spegnere e ricollegare la scheda con jumper BOOT, quindi ripetere la procedura.",
+    "Power off and reconnect the board with the BOOT jumper, then repeat the procedure.",
+    "Apague y reconecte la placa con el jumper BOOT y repita el procedimiento.",
+    "Platine ausschalten, mit BOOT-Jumper erneut anschließen und Vorgang wiederholen.",
+    "Éteignez et reconnectez la carte avec le cavalier BOOT, puis recommencez."
+  ],
+  "FirmwareErasing": [
+    "Cancellazione flash in corso. Non scollegare la scheda.",
+    "Erasing flash. Do not disconnect the board.",
+    "Borrando flash. No desconecte la placa.",
+    "Flash wird gelöscht. Platine nicht trennen.",
+    "Effacement de la flash. Ne déconnectez pas la carte."
+  ],
+  "FirmwareWriting": [
+    "Scrittura firmware in corso. Non scollegare la scheda.",
+    "Writing firmware. Do not disconnect the board.",
+    "Escribiendo firmware. No desconecte la placa.",
+    "Firmware wird geschrieben. Platine nicht trennen.",
+    "Écriture du firmware. Ne déconnectez pas la carte."
+  ],
+  "FirmwareVerifying": [
+    "Verifica del firmware tramite rilettura completa…",
+    "Verifying firmware with a complete readback…",
+    "Verificando el firmware mediante lectura completa…",
+    "Firmware wird durch vollständiges Auslesen geprüft…",
+    "Vérification du firmware par relecture complète…"
+  ],
+  "FirmwareVerifyFailed": [
+    "Il firmware riletto non corrisponde al file selezionato.",
+    "Firmware readback does not match the selected file.",
+    "El firmware leído no coincide con el archivo seleccionado.",
+    "Ausgelesene Firmware stimmt nicht mit der gewählten Datei überein.",
+    "Le firmware relu ne correspond pas au fichier sélectionné."
+  ],
+  "FirmwareVerified": [
+    "Firmware scritto e verificato.",
+    "Firmware written and verified.",
+    "Firmware escrito y verificado.",
+    "Firmware geschrieben und geprüft.",
+    "Firmware écrit et vérifié."
+  ],
+  "WizardBack": [
+    "Indietro",
+    "Back",
+    "Atrás",
+    "Zurück",
+    "Précédent"
+  ],
+  "WizardNext": [
+    "Avanti",
+    "Next",
+    "Siguiente",
+    "Weiter",
+    "Suivant"
+  ],
+  "WizardFinish": [
+    "Chiudi",
+    "Close",
+    "Cerrar",
+    "Schließen",
+    "Fermer"
+  ],
+  "FirmwareSelect": [
+    "1. Seleziona il firmware",
+    "1. Select firmware",
+    "1. Seleccione el firmware",
+    "1. Firmware auswählen",
+    "1. Sélectionnez le firmware"
+  ],
+  "FirmwareSelectHelp": [
+    "Seleziona il file binario del firmware per OpenBrickLight. Verranno controllati dimensione e vettori di avvio.\n\nLa connessione online è stata chiusa. La programmazione sostituisce l’intera flash; salva prima su file la configurazione che vuoi conservare.\n\nIl controllo del file non ne certifica provenienza o funzionalità: utilizza il firmware previsto per questa scheda.",
+    "Select the OpenBrickLight firmware binary. Size and startup vectors will be checked.\n\nThe online connection has been closed. Programming replaces the entire flash; save any configuration you want to keep to a file first.\n\nFile validation does not certify origin or functionality: use firmware intended for this board.",
+    "Seleccione el binario del firmware OpenBrickLight. Se comprobarán tamaño y vectores de arranque.\n\nLa conexión online se ha cerrado. La programación sustituye toda la flash; guarde antes en un archivo la configuración que desee conservar.\n\nLa validación no certifica origen ni funcionamiento: utilice firmware para esta placa.",
+    "OpenBrickLight-Firmwaredatei auswählen. Größe und Startvektoren werden geprüft.\n\nDie Online-Verbindung wurde geschlossen. Beim Programmieren wird der gesamte Flash ersetzt; gewünschte Konfiguration vorher in einer Datei speichern.\n\nDie Dateiprüfung bestätigt weder Herkunft noch Funktion: Firmware für diese Platine verwenden.",
+    "Sélectionnez le binaire OpenBrickLight. La taille et les vecteurs de démarrage seront contrôlés.\n\nLa connexion en ligne a été fermée. La programmation remplace toute la flash ; enregistrez d’abord la configuration à conserver dans un fichier.\n\nLa validation ne certifie ni l’origine ni le fonctionnement : utilisez le firmware prévu pour cette carte."
+  ],
+  "FirmwareBrowse": [
+    "Scegli file .bin…",
+    "Choose .bin file…",
+    "Elegir archivo .bin…",
+    ".bin-Datei wählen…",
+    "Choisir un fichier .bin…"
+  ],
+  "FirmwareBoot": [
+    "2. Prepara la scheda",
+    "2. Prepare the board",
+    "2. Prepare la placa",
+    "2. Platine vorbereiten",
+    "2. Préparez la carte"
+  ],
+  "FirmwareBootHelp": [
+    "1. Spegni la scheda e scollegala dal PC.\n\n2. Metti il jumper nella posizione BOOT.\n\n3. Ricollega la scheda al PC e alimentala.\n\n4. Seleziona la porta COM corrispondente e conferma la preparazione. Avanti identificherà la scheda senza cancellare la flash.\n\nSe un tentativo fallisce, ripeti lo spegnimento e il collegamento con jumper BOOT prima di riprovare.",
+    "1. Power off the board and disconnect it from the PC.\n\n2. Move the jumper to BOOT.\n\n3. Reconnect the board to the PC and power it on.\n\n4. Select its COM port and confirm preparation. Next identifies the board without erasing flash.\n\nIf an attempt fails, power off and reconnect with the BOOT jumper before retrying.",
+    "1. Apague la placa y desconéctela del PC.\n\n2. Coloque el jumper en BOOT.\n\n3. Reconecte la placa al PC y enciéndala.\n\n4. Seleccione su puerto COM y confirme. Siguiente identificará la placa sin borrar la flash.\n\nSi falla, apague y reconecte con el jumper BOOT antes de reintentar.",
+    "1. Platine ausschalten und vom PC trennen.\n\n2. Jumper auf BOOT setzen.\n\n3. Platine mit dem PC verbinden und einschalten.\n\n4. COM-Port auswählen und Vorbereitung bestätigen. Weiter identifiziert die Platine ohne Flash-Löschung.\n\nBei einem Fehler vor dem nächsten Versuch ausschalten und mit BOOT-Jumper erneut verbinden.",
+    "1. Éteignez la carte et déconnectez-la du PC.\n\n2. Placez le cavalier sur BOOT.\n\n3. Reconnectez la carte au PC et alimentez-la.\n\n4. Sélectionnez son port COM et confirmez. Suivant identifie la carte sans effacer la flash.\n\nEn cas d’échec, éteignez et reconnectez avec le cavalier BOOT avant de réessayer."
+  ],
+  "FirmwarePrepared": [
+    "Ho eseguito i passaggi e la scheda è in BOOT",
+    "I completed the steps and the board is in BOOT",
+    "He completado los pasos y la placa está en BOOT",
+    "Schritte ausgeführt, Platine ist im BOOT-Modus",
+    "J’ai suivi les étapes et la carte est en BOOT"
+  ],
+  "FirmwareRefreshPorts": [
+    "Aggiorna porte COM",
+    "Refresh COM ports",
+    "Actualizar puertos COM",
+    "COM-Ports aktualisieren",
+    "Actualiser les ports COM"
+  ],
+  "FirmwarePrepareRequired": [
+    "Conferma la preparazione e seleziona una porta COM.",
+    "Confirm preparation and select a COM port.",
+    "Confirme la preparación y seleccione un puerto COM.",
+    "Vorbereitung bestätigen und COM-Port auswählen.",
+    "Confirmez la préparation et sélectionnez un port COM."
+  ],
+  "FirmwareProbing": [
+    "Identificazione del bootloader ST in corso…",
+    "Identifying the ST bootloader…",
+    "Identificando el bootloader ST…",
+    "ST-Bootloader wird identifiziert…",
+    "Identification du bootloader ST…"
+  ],
+  "FirmwareReview": [
+    "3. Conferma la programmazione",
+    "3. Confirm programming",
+    "3. Confirme la programación",
+    "3. Programmierung bestätigen",
+    "3. Confirmez la programmation"
+  ],
+  "FirmwareReviewHelp": [
+    "File: {0}\nDimensione: {1} byte\nSHA-256: {2}\n\nPorta: {3}\nID MCU: 0x{4:X4} — Flash: {5} KB\nIndirizzo: 0x08000000\n\nPremendo Programma verrà cancellata l’intera flash e scritto il file selezionato. Seguirà la verifica completa. Non scollegare la scheda durante l’operazione.",
+    "File: {0}\nSize: {1} bytes\nSHA-256: {2}\n\nPort: {3}\nMCU ID: 0x{4:X4} — Flash: {5} KB\nAddress: 0x08000000\n\nProgram erases the entire flash and writes the selected file, followed by full verification. Do not disconnect the board during the operation.",
+    "Archivo: {0}\nTamaño: {1} bytes\nSHA-256: {2}\n\nPuerto: {3}\nID MCU: 0x{4:X4} — Flash: {5} KB\nDirección: 0x08000000\n\nProgramar borrará toda la flash y escribirá el archivo, seguido de una verificación completa. No desconecte la placa.",
+    "Datei: {0}\nGröße: {1} Bytes\nSHA-256: {2}\n\nPort: {3}\nMCU-ID: 0x{4:X4} — Flash: {5} KB\nAdresse: 0x08000000\n\nProgrammieren löscht den gesamten Flash und schreibt die Datei, gefolgt von einer vollständigen Prüfung. Platine dabei nicht trennen.",
+    "Fichier : {0}\nTaille : {1} octets\nSHA-256 : {2}\n\nPort : {3}\nID MCU : 0x{4:X4} — Flash : {5} Ko\nAdresse : 0x08000000\n\nProgrammer efface toute la flash et écrit le fichier, puis effectue une vérification complète. Ne déconnectez pas la carte."
+  ],
+  "FirmwareProgram": [
+    "Programma",
+    "Program",
+    "Programar",
+    "Programmieren",
+    "Programmer"
+  ],
+  "FirmwareResult": [
+    "4. Esito aggiornamento",
+    "4. Update result",
+    "4. Resultado",
+    "4. Aktualisierungsergebnis",
+    "4. Résultat"
+  ],
+  "FirmwareSuccess": [
+    "Aggiornamento completato: firmware scritto e verificato.\n\n1. Spegni e scollega la scheda.\n2. Riporta il jumper dalla posizione BOOT alla posizione di funzionamento normale.\n3. Ricollega la scheda al PC e alimentala.\n4. Chiudi il wizard e premi Connetti per leggere la configurazione.",
+    "Update completed: firmware written and verified.\n\n1. Power off and disconnect the board.\n2. Move the jumper from BOOT to the normal operating position.\n3. Reconnect the board to the PC and power it on.\n4. Close the wizard and press Connect to read the configuration.",
+    "Actualización completada: firmware escrito y verificado.\n\n1. Apague y desconecte la placa.\n2. Mueva el jumper de BOOT a la posición normal.\n3. Reconecte al PC y encienda la placa.\n4. Cierre el asistente y pulse Conectar para leer la configuración.",
+    "Aktualisierung abgeschlossen: Firmware geschrieben und geprüft.\n\n1. Platine ausschalten und trennen.\n2. Jumper von BOOT auf Normalbetrieb setzen.\n3. Mit dem PC verbinden und einschalten.\n4. Assistent schließen und Verbinden drücken, um die Konfiguration zu lesen.",
+    "Mise à jour terminée : firmware écrit et vérifié.\n\n1. Éteignez et déconnectez la carte.\n2. Déplacez le cavalier de BOOT vers le fonctionnement normal.\n3. Reconnectez au PC et alimentez la carte.\n4. Fermez l’assistant et cliquez sur Connecter pour lire la configuration."
+  ],
+  "FirmwareFailure": [
+    "Aggiornamento non completato.\n\n{0}\n\nNon avviare il firmware non verificato. Spegni la scheda, lascia il jumper su BOOT, ricollegala e ripeti il wizard con il file corretto.",
+    "Update not completed.\n\n{0}\n\nDo not run unverified firmware. Power off, leave the jumper on BOOT, reconnect and repeat the wizard with the correct file.",
+    "Actualización no completada.\n\n{0}\n\nNo ejecute firmware sin verificar. Apague, deje el jumper en BOOT, reconecte y repita el asistente con el archivo correcto.",
+    "Aktualisierung nicht abgeschlossen.\n\n{0}\n\nUngeprüfte Firmware nicht starten. Ausschalten, Jumper auf BOOT lassen, erneut verbinden und Assistenten mit korrekter Datei wiederholen.",
+    "Mise à jour non terminée.\n\n{0}\n\nNe lancez pas de firmware non vérifié. Éteignez, laissez le cavalier sur BOOT, reconnectez et recommencez avec le bon fichier."
+  ],
+  "FirmwareError": [
+    "Operazione non riuscita: {0}",
+    "Operation failed: {0}",
+    "La operación falló: {0}",
+    "Vorgang fehlgeschlagen: {0}",
+    "Échec de l’opération : {0}"
+  ],
+  "ApplyBoard": [
+    "Applica",
+    "Apply",
+    "Aplicar",
+    "Anwenden",
+    "Appliquer"
+  ],
+  "StartBoard": [
+    "Avvia",
+    "Start",
+    "Iniciar",
+    "Starten",
+    "Démarrer"
+  ],
+  "PauseBoard": [
+    "Pausa",
+    "Pause",
+    "Pausa",
+    "Pause",
+    "Pause"
+  ],
+  "ResumeBoard": [
+    "Riprendi",
+    "Resume",
+    "Reanudar",
+    "Fortsetzen",
+    "Reprendre"
+  ],
+  "StopBoard": [
+    "Ferma",
+    "Stop",
+    "Detener",
+    "Stoppen",
+    "Arrêter"
+  ],
+  "RestartBoard": [
+    "Riavvia",
+    "Restart",
+    "Reiniciar",
+    "Neu starten",
+    "Redémarrer"
+  ],
+  "SaveBoard": [
+    "Salva EEPROM",
+    "Save EEPROM",
+    "Guardar EEPROM",
+    "EEPROM speichern",
+    "Enregistrer EEPROM"
+  ],
+  "AllChannels": [
+    "Tutti i canali",
+    "All channels",
+    "Todos los canales",
+    "Alle Kanäle",
+    "Tous les canaux"
+  ],
+  "BoardSaved": [
+    "Configurazione salvata nella EEPROM.",
+    "Configuration saved to EEPROM.",
+    "Configuración guardada en EEPROM.",
+    "Konfiguration im EEPROM gespeichert.",
+    "Configuration enregistrée dans l’EEPROM."
+  ],
+  "BoardCommandDone": [
+    "Comando completato.",
+    "Command completed.",
+    "Comando completado.",
+    "Befehl ausgeführt.",
+    "Commande terminée."
+  ],
+  "BoardState": [
+    "Canale {0}: stato {1}, step {2}, PWM {3}% · EEPROM {4}",
+    "Channel {0}: state {1}, step {2}, PWM {3}% · EEPROM {4}",
+    "Canal {0}: estado {1}, paso {2}, PWM {3}% · EEPROM {4}",
+    "Kanal {0}: Status {1}, Schritt {2}, PWM {3}% · EEPROM {4}",
+    "Canal {0} : état {1}, étape {2}, PWM {3}% · EEPROM {4}"
+  ],
+  "BoardStopped": [
+    "fermo",
+    "stopped",
+    "detenido",
+    "gestoppt",
+    "arrêté"
+  ],
+  "BoardRunning": [
+    "in esecuzione",
+    "running",
+    "en ejecución",
+    "läuft",
+    "en cours"
+  ],
+  "BoardPaused": [
+    "in pausa",
+    "paused",
+    "en pausa",
+    "pausiert",
+    "en pause"
+  ],
+  "BoardFinished": [
+    "terminato",
+    "finished",
+    "finalizado",
+    "beendet",
+    "terminé"
+  ],
+  "BoardUnsaved": [
+    "da salvare",
+    "unsaved",
+    "sin guardar",
+    "ungespeichert",
+    "non enregistrée"
+  ],
+  "BoardClean": [
+    "salvata",
+    "saved",
+    "guardada",
+    "gespeichert",
+    "enregistrée"
+  ],
+  "BoardSaving": [
+    "salvataggio…",
+    "saving…",
+    "guardando…",
+    "wird gespeichert…",
+    "enregistrement…"
+  ],
+  "HardwarePwm": [
+    "PWM reale dalla scheda",
+    "Live PWM from board",
+    "PWM real de la placa",
+    "Live-PWM von der Platine",
+    "PWM réel de la carte"
+  ],
+  "HardwareLive": [
+    "In diretta",
+    "Live",
+    "En directo",
+    "Live",
+    "En direct"
+  ],
+  "Cancel": [
+    "Annulla",
+    "Cancel",
+    "Cancelar",
+    "Abbrechen",
+    "Annuler"
+  ],
+  "ConnectionFailureDetails": [
+    "Connessione non riuscita: {0}\n\nDettagli delle richieste e risposte nel file:\n{1}",
+    "Connection failed: {0}\n\nRequest and response details in:\n{1}",
+    "Error de conexión: {0}\n\nDetalles de solicitudes y respuestas en:\n{1}",
+    "Verbindung fehlgeschlagen: {0}\n\nDetails zu Anfragen und Antworten:\n{1}",
+    "Échec de connexion : {0}\n\nDétails des requêtes et réponses :\n{1}"
+  ],
+  "AlwaysCyclic": [
+    "Sequenza ciclica continua",
+    "Continuous sequence loop",
+    "Secuencia cíclica continua",
+    "Fortlaufende Sequenzschleife",
+    "Séquence en boucle continue"
+  ],
+  "FirmwareSelected": [
+    "Firmware selezionato: {0}",
+    "Selected firmware: {0}",
+    "Firmware seleccionado: {0}",
+    "Ausgewählte Firmware: {0}",
+    "Firmware sélectionné : {0}"
+  ],
+  "TipArea": [
+    "Area dell'interfaccia con informazioni e controlli della sezione.",
+    "Interface area containing information and controls for this section.",
+    "Área de la interfaz con información y controles de esta sección.",
+    "Oberflächenbereich mit Informationen und Bedienelementen dieses Abschnitts.",
+    "Zone de l’interface regroupant les informations et commandes de cette section."
+  ],
+  "TipNew": [
+    "Crea un nuovo progetto con 28 canali indipendenti.",
+    "Create a new project with 28 independent channels.",
+    "Crea un proyecto con 28 canales independientes.",
+    "Neues Projekt mit 28 unabhängigen Kanälen erstellen.",
+    "Créer un projet avec 28 canaux indépendants."
+  ],
+  "TipOpen": [
+    "Apre un progetto JSON e carica sequenze e colori LED.",
+    "Open a JSON project with sequences and LED colors.",
+    "Abre un proyecto JSON con secuencias y colores LED.",
+    "JSON-Projekt mit Sequenzen und LED-Farben öffnen.",
+    "Ouvrir un projet JSON avec séquences et couleurs LED."
+  ],
+  "TipSave": [
+    "Salva il progetto nel file corrente. Per salvare sulla scheda usa Salva EEPROM.",
+    "Save the project to its current file. Use Save EEPROM to persist it on the board.",
+    "Guarda el proyecto en su archivo. Use Guardar EEPROM para conservarlo en la placa.",
+    "Projekt in der aktuellen Datei speichern. Zum Speichern auf der Platine EEPROM speichern verwenden.",
+    "Enregistrer le projet dans son fichier. Utiliser Enregistrer EEPROM pour le conserver sur la carte."
+  ],
+  "TipSaveAs": [
+    "Salva il progetto JSON scegliendo nome e percorso.",
+    "Save the JSON project with a chosen name and location.",
+    "Guarda el proyecto JSON eligiendo nombre y ubicación.",
+    "JSON-Projekt unter einem gewählten Namen und Pfad speichern.",
+    "Enregistrer le projet JSON en choisissant son nom et son emplacement."
+  ],
+  "TipLanguage": [
+    "Cambia la lingua dell'interfaccia e la conserva per i prossimi avvii.",
+    "Change the interface language and remember it for future launches.",
+    "Cambia el idioma de la interfaz y lo recuerda para futuros inicios.",
+    "Sprache der Oberfläche ändern und für künftige Starts speichern.",
+    "Changer la langue de l’interface et la conserver pour les prochains démarrages."
+  ],
+  "TipConnect": [
+    "Cerca la scheda sulle porte COM e ne carica la configurazione nell'editor.",
+    "Search COM ports for the board and load its configuration into the editor.",
+    "Busca la placa en los puertos COM y carga su configuración en el editor.",
+    "Platine an COM-Ports suchen und ihre Konfiguration in den Editor laden.",
+    "Rechercher la carte sur les ports COM et charger sa configuration dans l’éditeur."
+  ],
+  "TipDisconnect": [
+    "Chiude la connessione alla scheda conservando il progetto nell'editor.",
+    "Close the board connection while keeping the project in the editor.",
+    "Cierra la conexión manteniendo el proyecto en el editor.",
+    "Verbindung zur Platine schließen und das Projekt im Editor behalten.",
+    "Fermer la connexion à la carte tout en conservant le projet dans l’éditeur."
+  ],
+  "TipCancelSearch": [
+    "Interrompe la ricerca della scheda e rilascia la porta seriale.",
+    "Cancel the board search and release the serial port.",
+    "Cancela la búsqueda y libera el puerto serie.",
+    "Platinensuche abbrechen und den seriellen Port freigeben.",
+    "Annuler la recherche de la carte et libérer le port série."
+  ],
+  "TipLiveChanges": [
+    "Invia automaticamente alla scheda le modifiche dopo una breve attesa. Disattiva per applicarle manualmente.",
+    "Automatically send edits to the board after a short delay. Disable to apply them manually.",
+    "Envía los cambios automáticamente tras una breve espera. Desactive para aplicarlos manualmente.",
+    "Änderungen nach kurzer Wartezeit automatisch senden. Für manuelles Anwenden deaktivieren.",
+    "Envoyer automatiquement les modifications après un court délai. Désactiver pour appliquer manuellement."
+  ],
+  "TipFirmwareUpdate": [
+    "Apre il wizard che guida al collegamento in BOOT, alla programmazione e alla verifica del firmware.",
+    "Open the wizard for BOOT connection, firmware programming and verification.",
+    "Abre el asistente de conexión BOOT, programación y verificación del firmware.",
+    "Assistenten für BOOT-Verbindung, Firmware-Programmierung und Prüfung öffnen.",
+    "Ouvrir l’assistant de connexion BOOT, de programmation et de vérification du firmware."
+  ],
+  "TipHardwareTarget": [
+    "Sceglie il canale, oppure tutti i canali, a cui applicare i comandi della scheda. Salva EEPROM riguarda sempre tutti i canali.",
+    "Choose one or all channels for board commands. Save EEPROM always includes all channels.",
+    "Elige uno o todos los canales para las órdenes. Guardar EEPROM incluye siempre todos.",
+    "Einen oder alle Kanäle für Platinenbefehle auswählen. EEPROM speichern umfasst immer alle Kanäle.",
+    "Choisir un canal ou tous pour les commandes. Enregistrer EEPROM concerne toujours tous les canaux."
+  ],
+  "TipApplyBoard": [
+    "Invia e avvia sulla scheda le sequenze modificate nell'ambito selezionato. Non salva in EEPROM.",
+    "Send and start edited sequences in the selected scope. Does not save to EEPROM.",
+    "Envía e inicia las secuencias modificadas del ámbito elegido. No guarda en EEPROM.",
+    "Geänderte Sequenzen im gewählten Bereich senden und starten. Speichert nicht im EEPROM.",
+    "Envoyer et démarrer les séquences modifiées dans la sélection. N’enregistre pas dans l’EEPROM."
+  ],
+  "TipStartBoard": [
+    "Applica le modifiche e avvia i canali selezionati. Un canale già in esecuzione non viene riavviato se non è stato modificato.",
+    "Apply edits and start selected channels. An unchanged running channel keeps its position.",
+    "Aplica cambios e inicia los canales elegidos. Un canal en marcha sin cambios conserva su posición.",
+    "Änderungen anwenden und gewählte Kanäle starten. Unveränderte laufende Kanäle behalten ihre Position.",
+    "Appliquer les modifications et démarrer les canaux choisis. Un canal actif inchangé conserve sa position."
+  ],
+  "TipPauseBoard": [
+    "Mette in pausa i canali selezionati mantenendo la luminosità corrente.",
+    "Pause selected channels while holding their current brightness.",
+    "Pausa los canales elegidos manteniendo el brillo actual.",
+    "Gewählte Kanäle pausieren und die aktuelle Helligkeit halten.",
+    "Mettre les canaux choisis en pause en maintenant la luminosité actuelle."
+  ],
+  "TipResumeBoard": [
+    "Riprende i canali in pausa dalla posizione in cui erano stati fermati.",
+    "Resume paused channels from their paused position.",
+    "Reanuda los canales pausados desde su posición.",
+    "Pausierte Kanäle an ihrer bisherigen Position fortsetzen.",
+    "Reprendre les canaux en pause à leur position précédente."
+  ],
+  "TipStopBoard": [
+    "Ferma i canali selezionati, spegne le uscite e azzera la posizione.",
+    "Stop selected channels, switch outputs off and reset their position.",
+    "Detiene los canales elegidos, apaga las salidas y reinicia la posición.",
+    "Gewählte Kanäle stoppen, Ausgänge ausschalten und Position zurücksetzen.",
+    "Arrêter les canaux choisis, éteindre les sorties et remettre la position à zéro."
+  ],
+  "TipRestartBoard": [
+    "Applica le modifiche e riavvia sempre dal primo step i canali selezionati.",
+    "Apply edits and always restart selected channels from their first step.",
+    "Aplica cambios y reinicia siempre los canales elegidos desde el primer paso.",
+    "Änderungen anwenden und gewählte Kanäle immer beim ersten Schritt neu starten.",
+    "Appliquer les modifications et redémarrer les canaux choisis à la première étape."
+  ],
+  "TipSaveBoard": [
+    "Applica e avvia tutte le modifiche, poi salva l'intera configurazione nella EEPROM per il prossimo avvio.",
+    "Apply and start all edits, then save the complete configuration to EEPROM for the next startup.",
+    "Aplica e inicia todos los cambios y guarda la configuración completa en EEPROM para el próximo arranque.",
+    "Alle Änderungen anwenden und starten, dann die gesamte Konfiguration für den nächsten Start im EEPROM speichern.",
+    "Appliquer et démarrer toutes les modifications, puis enregistrer la configuration complète dans l’EEPROM pour le prochain démarrage."
+  ],
+  "TipChannels": [
+    "Seleziona il canale da modificare. Ogni canale ha step, tempi e colore indipendenti.",
+    "Select a channel to edit. Each channel has independent steps, timing and color.",
+    "Selecciona el canal. Cada canal tiene pasos, tiempos y color independientes.",
+    "Kanal zum Bearbeiten wählen. Schritte, Zeiten und Farbe sind je Kanal unabhängig.",
+    "Choisir le canal à modifier. Chaque canal possède ses étapes, ses durées et sa couleur."
+  ],
+  "TipTimeline": [
+    "Mostra le sequenze dei canali nel tempo. Clicca uno step per selezionarlo; trascina il punto finale per modificarne la durata e, per le rampe, il livello finale.",
+    "Show channel sequences over time. Click a step to select it; drag its endpoint to change duration and, for ramps, the final level.",
+    "Muestra las secuencias en el tiempo. Pulse un paso para seleccionarlo; arrastre el extremo para cambiar duración y, en rampas, nivel final.",
+    "Kanalsequenzen im Zeitverlauf anzeigen. Schritt anklicken; Endpunkt ziehen, um Dauer und bei Rampen den Endwert zu ändern.",
+    "Afficher les séquences dans le temps. Cliquer sur une étape ; déplacer son extrémité pour modifier la durée et, pour une rampe, le niveau final."
+  ],
+  "TipGrid": [
+    "Elenca gli step del canale selezionato. Seleziona una riga per modificarne i parametri; la posizione è calcolata dalle durate.",
+    "List steps of the selected channel. Select a row to edit its parameters; position is calculated from durations.",
+    "Lista los pasos del canal elegido. Seleccione una fila para editar parámetros; la posición se calcula con las duraciones.",
+    "Schritte des gewählten Kanals auflisten. Zeile für Parameter wählen; Position wird aus den Dauern berechnet.",
+    "Lister les étapes du canal choisi. Sélectionner une ligne pour modifier ses paramètres ; la position dépend des durées."
+  ],
+  "TipAddStep": [
+    "Aggiunge uno step al canale selezionato, fino a un massimo di 10.",
+    "Add a step to the selected channel, up to 10 steps.",
+    "Añade un paso al canal elegido, hasta 10 pasos.",
+    "Schritt zum gewählten Kanal hinzufügen, maximal 10.",
+    "Ajouter une étape au canal choisi, jusqu’à 10 étapes."
+  ],
+  "TipDeleteStep": [
+    "Elimina lo step selezionato dal canale corrente.",
+    "Delete the selected step from the current channel.",
+    "Elimina el paso seleccionado del canal actual.",
+    "Gewählten Schritt aus dem aktuellen Kanal löschen.",
+    "Supprimer l’étape sélectionnée du canal actuel."
+  ],
+  "TipClear": [
+    "Rimuove tutti gli step dal canale selezionato.",
+    "Remove all steps from the selected channel.",
+    "Elimina todos los pasos del canal elegido.",
+    "Alle Schritte des gewählten Kanals entfernen.",
+    "Supprimer toutes les étapes du canal choisi."
+  ],
+  "TipCopy": [
+    "Copia la sequenza del canale corrente nel canale di destinazione indicato accanto.",
+    "Copy the current sequence to the destination channel selected beside this button.",
+    "Copia la secuencia al canal de destino indicado al lado.",
+    "Aktuelle Sequenz in den daneben gewählten Zielkanal kopieren.",
+    "Copier la séquence actuelle vers le canal de destination choisi à côté."
+  ],
+  "TipDestination": [
+    "Numero del canale che riceverà la sequenza quando premi Copia.",
+    "Channel number that receives the sequence when you press Copy.",
+    "Número del canal que recibirá la secuencia al pulsar Copiar.",
+    "Nummer des Kanals, der die Sequenz beim Kopieren erhält.",
+    "Numéro du canal qui recevra la séquence lors de la copie."
+  ],
+  "TipSingleStep": [
+    "Mantiene solo lo step selezionato, utile per un singolo effetto continuo.",
+    "Keep only the selected step, useful for a single continuous effect.",
+    "Conserva solo el paso elegido, útil para un efecto continuo.",
+    "Nur den gewählten Schritt behalten, etwa für einen dauerhaften Effekt.",
+    "Conserver uniquement l’étape choisie, pour un effet continu."
+  ],
+  "TipAlwaysCyclic": [
+    "Dopo l'ultimo step la sequenza riparte dal primo. Ogni canale ripete secondo la propria durata.",
+    "After the last step, the sequence restarts from the first. Each channel loops at its own duration.",
+    "Tras el último paso se vuelve al primero. Cada canal repite con su propia duración.",
+    "Nach dem letzten Schritt beginnt die Sequenz von vorn. Jeder Kanal wiederholt sich gemäß seiner eigenen Dauer.",
+    "Après la dernière étape, la séquence reprend à la première. Chaque canal boucle selon sa propre durée."
+  ],
+  "TipStep": [
+    "Numero progressivo dello step all'interno del canale selezionato.",
+    "Step number within the selected channel.",
+    "Número del paso dentro del canal elegido.",
+    "Schrittnummer innerhalb des gewählten Kanals.",
+    "Numéro de l’étape dans le canal choisi."
+  ],
+  "TipStart": [
+    "Luminosità iniziale della rampa, da 0% (spento) a 100%.",
+    "Ramp starting brightness, from 0% (off) to 100%.",
+    "Brillo inicial de la rampa, de 0% (apagado) a 100%.",
+    "Anfangshelligkeit der Rampe, von 0% (aus) bis 100%.",
+    "Luminosité initiale de la rampe, de 0% (éteint) à 100%."
+  ],
+  "TipEnd": [
+    "Luminosità finale della rampa, da 0% a 100%.",
+    "Ramp ending brightness, from 0% to 100%.",
+    "Brillo final de la rampa, de 0% a 100%.",
+    "Endhelligkeit der Rampe, von 0% bis 100%.",
+    "Luminosité finale de la rampe, de 0% à 100%."
+  ],
+  "TipDuration": [
+    "Tempo di esecuzione dello step in millisecondi: 10–60000. Al termine si passa allo step successivo.",
+    "Step duration in milliseconds: 10–60000. The next step follows when this time ends.",
+    "Duración del paso en milisegundos: 10–60000. Después comienza el siguiente.",
+    "Schrittdauer in Millisekunden: 10–60000. Danach folgt der nächste Schritt.",
+    "Durée de l’étape en millisecondes : 10–60000. L’étape suivante commence ensuite."
+  ],
+  "TipPosition": [
+    "Tempo cumulativo alla fine dello step, calcolato sommando le durate precedenti.",
+    "Cumulative time at the end of the step, calculated from step durations.",
+    "Tiempo acumulado al final del paso, calculado con las duraciones.",
+    "Kumulierte Zeit am Schrittende, aus den Schrittdauern berechnet.",
+    "Temps cumulé à la fin de l’étape, calculé à partir des durées."
+  ],
+  "TipMode": [
+    "Sceglie l'effetto dello step: luce fissa, fuoco, pulsazione, flash o rampa. I parametri disponibili cambiano con la modalità.",
+    "Choose the step effect: fixed light, fire, pulse, flash or ramp. Available parameters depend on the mode.",
+    "Elige el efecto: luz fija, fuego, pulsación, flash o rampa. Los parámetros dependen del modo.",
+    "Schritteffekt wählen: Dauerlicht, Feuer, Pulsieren, Blitz oder Rampe. Verfügbare Parameter hängen vom Modus ab.",
+    "Choisir l’effet : lumière fixe, feu, pulsation, flash ou rampe. Les paramètres dépendent du mode."
+  ],
+  "TipParameters": [
+    "Riepilogo dei parametri dell'effetto. Modificali nel pannello dello step.",
+    "Effect parameter summary. Edit these values in the step panel.",
+    "Resumen de parámetros del efecto. Edítelos en el panel del paso.",
+    "Übersicht der Effektparameter. Werte im Schrittbereich bearbeiten.",
+    "Résumé des paramètres de l’effet. Les modifier dans le panneau de l’étape."
+  ],
+  "TipBrightness": [
+    "Luminosità della luce fissa: 0% spegne il canale, 100% dà il massimo.",
+    "Fixed light brightness: 0% switches the channel off, 100% is full brightness.",
+    "Brillo de la luz fija: 0% apaga el canal y 100% es el máximo.",
+    "Dauerlichthelligkeit: 0% schaltet den Kanal aus, 100% ist volle Helligkeit.",
+    "Luminosité fixe : 0% éteint le canal, 100% donne la luminosité maximale."
+  ],
+  "TipMinimum": [
+    "Livello minimo dell'effetto in percentuale; non deve superare il massimo.",
+    "Minimum effect level in percent; must not exceed the maximum.",
+    "Nivel mínimo del efecto; no debe superar el máximo.",
+    "Minimaler Effektwert in Prozent; darf den Höchstwert nicht überschreiten.",
+    "Niveau minimal de l’effet en pourcentage ; ne doit pas dépasser le maximum."
+  ],
+  "TipMaximum": [
+    "Livello massimo dell'effetto in percentuale; non deve essere inferiore al minimo.",
+    "Maximum effect level in percent; must not be below the minimum.",
+    "Nivel máximo del efecto; no debe ser inferior al mínimo.",
+    "Maximaler Effektwert in Prozent; darf nicht unter dem Mindestwert liegen.",
+    "Niveau maximal de l’effet en pourcentage ; ne doit pas être inférieur au minimum."
+  ],
+  "TipCycle": [
+    "Periodo di un ciclo dell'effetto in millisecondi, da 100 a 10000. È distinto dalla durata dello step.",
+    "Effect cycle period in milliseconds, 100–10000. Separate from step duration.",
+    "Periodo del efecto en milisegundos, 100–10000. Es distinto de la duración del paso.",
+    "Effektperiode in Millisekunden, 100–10000. Unabhängig von der Schrittdauer.",
+    "Période de l’effet en millisecondes, 100–10000. Distincte de la durée de l’étape."
+  ],
+  "TipDuty": [
+    "Percentuale del periodo Flash trascorsa al livello massimo. A 0% resta al minimo, a 100% al massimo.",
+    "Percentage of the Flash period spent at maximum level. 0% stays at minimum, 100% at maximum.",
+    "Porcentaje del periodo Flash al nivel máximo. 0% mantiene el mínimo y 100% el máximo.",
+    "Anteil der Blitzperiode auf Höchstwert. 0% bleibt beim Mindestwert, 100% beim Höchstwert.",
+    "Pourcentage de la période Flash au niveau maximal. 0% reste au minimum, 100% au maximum."
+  ],
+  "TipMean": [
+    "Luminosità media attorno a cui varia casualmente l'effetto Fuoco.",
+    "Mean brightness around which the Fire effect varies randomly.",
+    "Brillo medio alrededor del cual varía aleatoriamente el efecto Fuego.",
+    "Mittlere Helligkeit, um die der Feuereffekt zufällig schwankt.",
+    "Luminosité moyenne autour de laquelle l’effet Feu varie aléatoirement."
+  ],
+  "TipStdDev": [
+    "Ampiezza delle variazioni casuali del Fuoco. Un valore maggiore produce oscillazioni più marcate.",
+    "Spread of random Fire variations. Higher values produce larger fluctuations.",
+    "Amplitud de las variaciones aleatorias del Fuego. Valores mayores producen oscilaciones más fuertes.",
+    "Stärke der zufälligen Feuerschwankungen. Höhere Werte erzeugen größere Änderungen.",
+    "Amplitude des variations aléatoires du Feu. Une valeur plus élevée accentue les fluctuations."
+  ],
+  "TipFilter": [
+    "Smorzamento delle variazioni del Fuoco. Valori alti rendono le variazioni più lente; 100% conserva il valore precedente.",
+    "Fire smoothing. Higher values slow changes; 100% retains the previous value.",
+    "Suavizado del Fuego. Valores altos ralentizan los cambios; 100% conserva el valor anterior.",
+    "Glättung des Feuereffekts. Hohe Werte verlangsamen Änderungen; 100% behält den vorherigen Wert.",
+    "Lissage du Feu. Des valeurs élevées ralentissent les changements ; 100% conserve la valeur précédente."
+  ],
+  "TipRefresh": [
+    "Intervallo tra i campioni casuali del Fuoco in millisecondi, da 1 a 10000.",
+    "Time between random Fire samples in milliseconds, 1–10000.",
+    "Intervalo entre muestras aleatorias del Fuego en milisegundos, 1–10000.",
+    "Abstand zufälliger Feuerwerte in Millisekunden, 1–10000.",
+    "Intervalle entre les échantillons aléatoires du Feu en millisecondes, 1–10000."
+  ],
+  "TipPreset": [
+    "Applica parametri Fuoco predefiniti per candela, caminetto o torcia.",
+    "Apply preset Fire parameters for a candle, fireplace or torch.",
+    "Aplica parámetros de Fuego predefinidos para vela, chimenea o antorcha.",
+    "Vorgegebene Feuerparameter für Kerze, Kamin oder Fackel anwenden.",
+    "Appliquer les paramètres Feu d’une bougie, d’une cheminée ou d’une torche."
+  ],
+  "TipSelectStep": [
+    "Seleziona una riga della tabella o un blocco della timeline per visualizzare e modificare lo step.",
+    "Select a table row or timeline block to view and edit the step.",
+    "Seleccione una fila o bloque de la línea de tiempo para ver y editar el paso.",
+    "Tabellenzeile oder Zeitachsenblock wählen, um den Schritt anzuzeigen und zu bearbeiten.",
+    "Sélectionner une ligne ou un bloc temporel pour afficher et modifier l’étape."
+  ],
+  "TipStepEditor": [
+    "Configura modalità, durata e parametri dello step selezionato.",
+    "Configure the selected step's mode, duration and parameters.",
+    "Configura modo, duración y parámetros del paso elegido.",
+    "Modus, Dauer und Parameter des gewählten Schritts einstellen.",
+    "Configurer le mode, la durée et les paramètres de l’étape choisie."
+  ],
+  "TipSummary": [
+    "Mostra il canale selezionato, il numero di step e la durata totale del ciclo.",
+    "Show the selected channel, step count and total cycle duration.",
+    "Muestra el canal elegido, número de pasos y duración total del ciclo.",
+    "Gewählten Kanal, Schrittanzahl und gesamte Zyklusdauer anzeigen.",
+    "Afficher le canal choisi, le nombre d’étapes et la durée totale du cycle."
+  ],
+  "TipStatus": [
+    "Mostra l'esito dell'ultima operazione o lo stato della connessione.",
+    "Show the latest operation result or connection status.",
+    "Muestra el resultado de la última operación o el estado de conexión.",
+    "Ergebnis des letzten Vorgangs oder Verbindungsstatus anzeigen.",
+    "Afficher le résultat de la dernière opération ou l’état de connexion."
+  ],
+  "TipCursor": [
+    "Posizione temporale del cursore nella timeline e nella simulazione locale.",
+    "Time cursor position in the timeline and local simulation.",
+    "Posición temporal del cursor en la línea de tiempo y simulación local.",
+    "Zeitposition des Cursors auf der Zeitachse und in der lokalen Simulation.",
+    "Position temporelle du curseur dans la vue temporelle et la simulation locale."
+  ],
+  "TipBoardState": [
+    "Telemetria del canale selezionato: stato, step attivo, PWM e stato del salvataggio EEPROM.",
+    "Selected channel telemetry: state, active step, PWM and EEPROM save status.",
+    "Telemetría del canal elegido: estado, paso activo, PWM y guardado EEPROM.",
+    "Telemetrie des gewählten Kanals: Zustand, aktiver Schritt, PWM und EEPROM-Speicherstatus.",
+    "Télémétrie du canal choisi : état, étape active, PWM et enregistrement EEPROM."
+  ],
+  "TipResizePanels": [
+    "Trascina il divisore tra i pannelli per ridistribuire lo spazio disponibile.",
+    "Drag the divider between panels to redistribute available space.",
+    "Arrastre el divisor entre paneles para redistribuir el espacio.",
+    "Trennlinie zwischen den Bereichen ziehen, um den Platz neu aufzuteilen.",
+    "Déplacer le séparateur entre les panneaux pour répartir l’espace."
+  ],
+  "TipLedPreview": [
+    "Anteprima dei 28 LED con luminosità PWM e colore. Clicca un LED per selezionare il canale.",
+    "Preview 28 LEDs with PWM brightness and color. Click an LED to select its channel.",
+    "Vista de 28 LED con brillo PWM y color. Pulse un LED para elegir su canal.",
+    "Vorschau von 28 LEDs mit PWM-Helligkeit und Farbe. LED anklicken, um ihren Kanal zu wählen.",
+    "Aperçu des 28 LED avec luminosité PWM et couleur. Cliquer sur une LED pour choisir son canal."
+  ],
+  "TipLedChannelValue": [
+    "Canale {0}: PWM {1}%. Clicca per selezionarlo e modificarne sequenza o colore.",
+    "Channel {0}: PWM {1}%. Click to select and edit its sequence or color.",
+    "Canal {0}: PWM {1}%. Pulse para seleccionarlo y editar su secuencia o color.",
+    "Kanal {0}: PWM {1}%. Zum Auswählen und Bearbeiten von Sequenz oder Farbe anklicken.",
+    "Canal {0} : PWM {1}%. Cliquer pour sélectionner et modifier sa séquence ou sa couleur."
+  ],
+  "TipLedChannel": [
+    "Canale selezionato per la scelta del colore dell'anteprima.",
+    "Selected channel for preview color selection.",
+    "Canal elegido para seleccionar el color de vista previa.",
+    "Gewählter Kanal für die Farbe der Vorschau.",
+    "Canal choisi pour la couleur de l’aperçu."
+  ],
+  "TipChooseLedColor": [
+    "Sceglie il colore del LED virtuale selezionato. Il colore è salvato nel progetto e non modifica la scheda.",
+    "Choose the selected virtual LED's color. Saved in the project; does not change the board.",
+    "Elige el color del LED virtual. Se guarda en el proyecto y no cambia la placa.",
+    "Farbe der gewählten virtuellen LED wählen. Im Projekt gespeichert; verändert die Platine nicht.",
+    "Choisir la couleur de la LED virtuelle. Enregistrée dans le projet, sans modifier la carte."
+  ],
+  "TipPlayPreview": [
+    "Avvia la simulazione locale ciclica. Non avvia le uscite della scheda.",
+    "Start the local looping simulation. Does not start board outputs.",
+    "Inicia la simulación local cíclica. No activa las salidas de la placa.",
+    "Lokale zyklische Simulation starten. Startet keine Platinenausgänge.",
+    "Démarrer la simulation locale en boucle. Ne démarre pas les sorties de la carte."
+  ],
+  "TipPausePreview": [
+    "Mette in pausa soltanto la simulazione locale mantenendone la posizione.",
+    "Pause only the local simulation while keeping its position.",
+    "Pausa solo la simulación local conservando su posición.",
+    "Nur die lokale Simulation pausieren und ihre Position behalten.",
+    "Mettre uniquement la simulation locale en pause en conservant sa position."
+  ],
+  "TipStopPreview": [
+    "Ferma la simulazione locale e riporta il tempo a zero.",
+    "Stop the local simulation and reset its time to zero.",
+    "Detiene la simulación local y vuelve al tiempo cero.",
+    "Lokale Simulation stoppen und Zeit auf null setzen.",
+    "Arrêter la simulation locale et remettre le temps à zéro."
+  ],
+  "TipPreviewTime": [
+    "Tempo trascorso nella simulazione locale. In modalità PWM reale viene indicata la visualizzazione in diretta.",
+    "Elapsed local simulation time. Live display is indicated when using board PWM.",
+    "Tiempo de simulación local. Con PWM real se indica la vista en directo.",
+    "Vergangene lokale Simulationszeit. Bei Platinen-PWM wird die Live-Anzeige gekennzeichnet.",
+    "Temps écoulé dans la simulation locale. Le mode PWM réel indique l’affichage en direct."
+  ],
+  "TipHardwarePwm": [
+    "Mostra i PWM letti dalla scheda connessa. Deseleziona per usare la simulazione locale e i suoi comandi.",
+    "Show PWM values from the connected board. Uncheck to use local simulation and its controls.",
+    "Muestra PWM de la placa conectada. Desmarque para usar la simulación local y sus controles.",
+    "PWM-Werte der verbundenen Platine anzeigen. Für lokale Simulation und deren Steuerung deaktivieren.",
+    "Afficher les PWM de la carte connectée. Décocher pour utiliser la simulation locale et ses commandes."
+  ],
+  "TipFirmwareHeading": [
+    "Fase corrente del wizard di aggiornamento firmware.",
+    "Current stage of the firmware update wizard.",
+    "Fase actual del asistente de actualización.",
+    "Aktueller Schritt des Firmware-Assistenten.",
+    "Étape actuelle de l’assistant de mise à jour."
+  ],
+  "TipFirmwareInstructions": [
+    "Istruzioni della fase corrente. Puoi scorrere e selezionare il testo per copiarlo.",
+    "Instructions for this stage. Scroll and select text to copy it.",
+    "Instrucciones de esta fase. Puede desplazarse y seleccionar texto para copiarlo.",
+    "Anweisungen zum aktuellen Schritt. Text kann gescrollt und zum Kopieren markiert werden.",
+    "Instructions de cette étape. Faire défiler et sélectionner le texte pour le copier."
+  ],
+  "TipFirmwareFile": [
+    "Percorso del file binario da programmare, verificato prima di procedere.",
+    "Path to the firmware binary, validated before proceeding.",
+    "Ruta del binario, validado antes de continuar.",
+    "Pfad zur Firmware-Binärdatei, vor dem Fortfahren geprüft.",
+    "Chemin du fichier binaire, validé avant de continuer."
+  ],
+  "TipFirmwarePorts": [
+    "Porta COM della scheda avviata con il jumper BOOT. Se non compare, aggiorna l'elenco.",
+    "COM port of the board started with the BOOT jumper. Refresh the list if missing.",
+    "Puerto COM de la placa iniciada con jumper BOOT. Actualice la lista si no aparece.",
+    "COM-Port der mit BOOT-Jumper gestarteten Platine. Liste aktualisieren, falls er fehlt.",
+    "Port COM de la carte démarrée avec le cavalier BOOT. Actualiser la liste s’il manque."
+  ],
+  "TipFirmwarePrepared": [
+    "Conferma di aver spento la scheda, posizionato il jumper su BOOT e ricollegato al PC.",
+    "Confirm the board was powered off, its jumper set to BOOT and reconnected to the PC.",
+    "Confirma que ha apagado la placa, puesto el jumper en BOOT y reconectado al PC.",
+    "Bestätigen, dass die Platine ausgeschaltet, der Jumper auf BOOT gesetzt und die Platine wieder verbunden wurde.",
+    "Confirmer avoir éteint la carte, placé le cavalier sur BOOT et reconnecté au PC."
+  ],
+  "TipFirmwareProgress": [
+    "Avanzamento di cancellazione, scrittura e verifica completa del firmware.",
+    "Progress of firmware erase, write and complete readback verification.",
+    "Progreso de borrado, escritura y verificación completa del firmware.",
+    "Fortschritt beim Löschen, Schreiben und vollständigen Prüfen der Firmware.",
+    "Progression de l’effacement, de l’écriture et de la vérification complète du firmware."
+  ],
+  "TipFirmwareBrowse": [
+    "Sceglie un file .bin per la scheda. Deve essere compilato per 0x08000000 e non superare 128 KB.",
+    "Choose a board .bin file built for 0x08000000, no larger than 128 KB.",
+    "Elige un .bin para la placa, compilado para 0x08000000 y de hasta 128 KB.",
+    "Eine .bin-Datei für 0x08000000 auswählen, maximal 128 KB.",
+    "Choisir un fichier .bin compilé pour 0x08000000, de 128 Ko maximum."
+  ],
+  "TipFirmwareRefreshPorts": [
+    "Rilegge le porte COM disponibili dopo il collegamento della scheda.",
+    "Refresh available COM ports after connecting the board.",
+    "Actualiza los puertos COM disponibles tras conectar la placa.",
+    "Verfügbare COM-Ports nach dem Anschließen aktualisieren.",
+    "Actualiser les ports COM disponibles après la connexion de la carte."
+  ],
+  "TipWizardBack": [
+    "Torna alla fase precedente. Dopo il controllo del bootloader sarà necessario ripetere il collegamento in BOOT.",
+    "Return to the previous stage. After probing the bootloader, repeat the BOOT connection procedure.",
+    "Vuelve a la fase anterior. Tras identificar el bootloader, repita la conexión en BOOT.",
+    "Zum vorherigen Schritt zurückkehren. Nach der Bootloader-Prüfung muss die BOOT-Verbindung wiederholt werden.",
+    "Revenir à l’étape précédente. Après identification du bootloader, refaire la connexion BOOT."
+  ],
+  "TipWizardNext": [
+    "Valida il file o identifica la scheda in BOOT, quindi passa alla fase successiva. Non programma ancora la flash.",
+    "Validate the file or identify the BOOT board, then continue. Flash programming has not started yet.",
+    "Valida el archivo o identifica la placa en BOOT y continúa. Todavía no programa la flash.",
+    "Datei prüfen oder BOOT-Platine identifizieren und fortfahren. Flash wird noch nicht programmiert.",
+    "Valider le fichier ou identifier la carte en BOOT, puis continuer. La flash n’est pas encore programmée."
+  ],
+  "TipFirmwareProgram": [
+    "Cancella la flash, scrive il firmware e ne verifica il contenuto completo. Non scollegare la scheda.",
+    "Erase flash, write firmware and verify its entire contents. Do not disconnect the board.",
+    "Borra la flash, escribe el firmware y verifica todo su contenido. No desconecte la placa.",
+    "Flash löschen, Firmware schreiben und vollständig prüfen. Platine nicht trennen.",
+    "Effacer la flash, écrire le firmware et vérifier tout son contenu. Ne pas déconnecter la carte."
+  ],
+  "TipWizardFinish": [
+    "Chiude il wizard dopo l'esito. Segui le istruzioni sul jumper prima di riconnettere l'editor.",
+    "Close the wizard after the result. Follow jumper instructions before reconnecting the editor.",
+    "Cierra el asistente tras el resultado. Siga las instrucciones del jumper antes de reconectar.",
+    "Assistenten nach dem Ergebnis schließen. Vor erneuter Verbindung Jumper-Anweisungen befolgen.",
+    "Fermer l’assistant après le résultat. Suivre les instructions du cavalier avant de reconnecter l’éditeur."
+  ],
+  "TipCancel": [
+    "Chiude il wizard prima della programmazione. Durante l'aggiornamento la chiusura è bloccata.",
+    "Close the wizard before programming. Closing is blocked during the update.",
+    "Cierra el asistente antes de programar. Durante la actualización no se puede cerrar.",
+    "Assistenten vor dem Programmieren schließen. Während der Aktualisierung ist das Schließen gesperrt.",
+    "Fermer l’assistant avant la programmation. La fermeture est bloquée pendant la mise à jour."
+  ],
+  "TipYes": [
+    "Conferma ed esegue l'operazione richiesta.",
+    "Confirm and perform the requested operation.",
+    "Confirma y realiza la operación solicitada.",
+    "Gewünschten Vorgang bestätigen und ausführen.",
+    "Confirmer et effectuer l'opération demandée."
+  ],
+  "TipNo": [
+    "Rifiuta l'operazione e torna alla schermata precedente.",
+    "Decline the operation and return to the previous screen.",
+    "Rechaza la operación y vuelve a la pantalla anterior.",
+    "Vorgang ablehnen und zum vorherigen Bildschirm zurückkehren.",
+    "Refuser l'opération et revenir à l'écran précédent."
+  ],
+  "TipOK": [
+    "Chiude questo messaggio e torna all'applicazione.",
+    "Close this message and return to the application.",
+    "Cierra este mensaje y vuelve a la aplicación.",
+    "Diese Meldung schließen und zur Anwendung zurückkehren.",
+    "Fermer ce message et revenir à l'application."
+  ],
+  "TipDialogMessage": [
+    "Spiega il risultato o la conferma richiesta per l'operazione corrente.",
+    "Explain the result or confirmation required for the current operation.",
+    "Explica el resultado o la confirmación requerida para la operación actual.",
+    "Ergebnis oder erforderliche Bestätigung für den aktuellen Vorgang erläutern.",
+    "Expliquer le résultat ou la confirmation nécessaire pour l'opération actuelle."
+  ]
+}

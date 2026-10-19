@@ -47,8 +47,22 @@ public sealed class TimelineControl : Control
         SetStyle(ControlStyles.ResizeRedraw, true);
     }
     private const int Header = 40, Left = 80, RowHeight = 35, Bottom = 28;
+    private float DpiScale => DeviceDpi / 96f;
+    private int DrawingWidth => (int)Math.Floor(ClientSize.Width / DpiScale);
+
+    /// <summary>Returns the scaled height needed to display every channel and the time header.</summary>
+    public override Size GetPreferredSize(Size proposedSize)
+    {
+        return new Size(proposedSize.Width, LogicalToDeviceUnits(Header + (Device?.Channels.Count ?? 28) * RowHeight + Bottom));
+    }
+
+    private MouseEventArgs ToLogicalCoordinates(MouseEventArgs e)
+    {
+        return new MouseEventArgs(e.Button, e.Clicks,
+            (int)Math.Round(e.X / DpiScale), (int)Math.Round(e.Y / DpiScale), e.Delta);
+    }
     private long MaxTime => _dragStep >= 0 ? _dragMaxTime : Math.Max(1000, Device?.Channels.Select(c => c.TotalDuration).DefaultIfEmpty(1000).Max() ?? 1000);
-    private double Scale => Math.Max(1, Width - Left - 24) / (double)MaxTime;
+    private double Scale => Math.Max(1, DrawingWidth - Left - 24) / (double)MaxTime;
     private int X(double ms) => Left + (int)Math.Round(ms * Scale);
     private long TimeAt(int x) => Math.Clamp((long)Math.Round((x - Left) / Scale), 0, MaxTime);
     private static Color ChannelColor(int index) => index switch
@@ -61,6 +75,7 @@ public sealed class TimelineControl : Control
     {
         base.OnPaint(e);
         var g = e.Graphics;
+        g.ScaleTransform(DpiScale, DpiScale);
         g.SmoothingMode = SmoothingMode.AntiAlias;
         g.Clear(BackColor);
         if (Device is null) return;
@@ -69,8 +84,8 @@ public sealed class TimelineControl : Control
         using var gridPen = new Pen(Color.FromArgb(49, 62, 80));
         using var textBrush = new SolidBrush(ForeColor);
         using var dimBrush = new SolidBrush(Color.FromArgb(146, 161, 182));
-        using var labelFont = new Font("Segoe UI", 9f);
-        using var smallFont = new Font("Segoe UI", 8f);
+        using var labelFont = new Font("Segoe UI", 12f, FontStyle.Regular, GraphicsUnit.Pixel);
+        using var smallFont = new Font("Segoe UI", 32f / 3f, FontStyle.Regular, GraphicsUnit.Pixel);
         long max = MaxTime;
         long tick = NiceTick(max / 10.0);
         for (long time = 0; time <= max; time += tick)
@@ -87,8 +102,8 @@ public sealed class TimelineControl : Control
             int bot = top + RowHeight;
             if (channel.ChannelNumber == SelectedChannel)
                 using (var selBrush = new SolidBrush(Color.FromArgb(35, 83, 117)))
-                    g.FillRectangle(selBrush, 0, top, Width, RowHeight);
-            g.DrawLine(gridPen, 0, bot, Width, bot);
+                    g.FillRectangle(selBrush, 0, top, DrawingWidth, RowHeight);
+            g.DrawLine(gridPen, 0, bot, DrawingWidth, bot);
             g.DrawString(Localizer.Text("ChannelShort", channel.ChannelNumber), labelFont, textBrush, 13, top + 9);
             double t = 0;
             var color = channel.ChannelNumber == SelectedChannel ? Color.FromArgb(76, 222, 255) : ChannelColor(i);
@@ -144,6 +159,7 @@ public sealed class TimelineControl : Control
     protected override void OnMouseDown(MouseEventArgs e)
     {
         base.OnMouseDown(e);
+        e = ToLogicalCoordinates(e);
         if (e.Button != MouseButtons.Left) return;
         if (Device is not null && e.Y >= Header && e.Y < Header + Device.Channels.Count * RowHeight)
         {
@@ -196,6 +212,7 @@ public sealed class TimelineControl : Control
     protected override void OnMouseMove(MouseEventArgs e)
     {
         base.OnMouseMove(e);
+        e = ToLogicalCoordinates(e);
         if (_dragStep >= 0 && Device is not null && e.Button == MouseButtons.Left)
         {
             int top = Header + _dragChannel * RowHeight;

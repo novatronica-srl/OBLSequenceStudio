@@ -16,8 +16,8 @@ internal sealed class DarkCheckBox : CheckBox
 
         // Keep the native disabled checkbox glyph, but replace its low-contrast text.
         int glyphWidth = CheckBoxRenderer.GetGlyphSize(e.Graphics, CheckBoxState.UncheckedDisabled).Width;
-        var textBounds = new Rectangle(Padding.Left + glyphWidth + 3, Padding.Top,
-            Math.Max(0, ClientSize.Width - Padding.Horizontal - glyphWidth - 3),
+        var textBounds = new Rectangle(Padding.Left + glyphWidth + LogicalToDeviceUnits(3), Padding.Top,
+            Math.Max(0, ClientSize.Width - Padding.Horizontal - glyphWidth - LogicalToDeviceUnits(3)),
             Math.Max(0, ClientSize.Height - Padding.Vertical));
         using var background = new SolidBrush(BackColor);
         e.Graphics.FillRectangle(background, textBounds);

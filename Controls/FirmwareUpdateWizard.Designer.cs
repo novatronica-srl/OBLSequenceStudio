@@ -170,12 +170,14 @@ partial class FirmwareUpdateWizard
         wizardLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         wizardLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 170F));
         wizardLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-        wizardLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 55F));
+        wizardLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         wizardLayout.Size = new Size(804, 581);
         wizardLayout.TabIndex = 0;
         // 
         // navigationButtons
         // 
+        navigationButtons.AutoSize = true;
+        navigationButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         navigationButtons.Controls.Add(_cancel);
         navigationButtons.Controls.Add(_next);
         navigationButtons.Controls.Add(_back);

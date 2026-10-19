@@ -15,6 +15,9 @@ partial class MainForm
         _timeline = new TimelineControl();
         _grid = new DataGridView();
         stepColumn = new DataGridViewTextBoxColumn();
+        startColumn = new DataGridViewTextBoxColumn();
+        endColumn = new DataGridViewTextBoxColumn();
+        durationColumn = new DataGridViewTextBoxColumn();
         positionColumn = new DataGridViewTextBoxColumn();
         modeColumn = new DataGridViewTextBoxColumn();
         parametersColumn = new DataGridViewTextBoxColumn();
@@ -102,22 +105,23 @@ partial class MainForm
         // 
         _grid.AllowUserToAddRows = false;
         _grid.AllowUserToDeleteRows = false;
+        _grid.AutoGenerateColumns = false;
         _grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         _grid.BackgroundColor = Color.FromArgb(27, 34, 48);
         _grid.BorderStyle = BorderStyle.None;
         dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
         dataGridViewCellStyle1.BackColor = Color.FromArgb(40, 53, 73);
-        dataGridViewCellStyle1.Font = new Font("Segoe UI", 9.5F);
+
         dataGridViewCellStyle1.ForeColor = Color.White;
         dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
         dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
         dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
         _grid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
         _grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        _grid.Columns.AddRange(new DataGridViewColumn[] { stepColumn, positionColumn, modeColumn, parametersColumn });
+        _grid.Columns.AddRange(new DataGridViewColumn[] { stepColumn, startColumn, endColumn, durationColumn, positionColumn, modeColumn, parametersColumn });
         dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
         dataGridViewCellStyle2.BackColor = Color.FromArgb(29, 39, 56);
-        dataGridViewCellStyle2.Font = new Font("Segoe UI", 9.5F);
+
         dataGridViewCellStyle2.ForeColor = Color.WhiteSmoke;
         dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(24, 110, 153);
         dataGridViewCellStyle2.SelectionForeColor = Color.White;
@@ -138,6 +142,12 @@ partial class MainForm
         // 
         // stepColumn
         // 
+        startColumn.Name = "startColumn";
+        startColumn.DataPropertyName = "Start";
+        endColumn.Name = "endColumn";
+        endColumn.DataPropertyName = "End";
+        durationColumn.Name = "durationColumn";
+        durationColumn.DataPropertyName = "Duration";
         stepColumn.FillWeight = 55F;
         stepColumn.HeaderText = "STEP";
         stepColumn.Name = "stepColumn";
@@ -822,6 +832,8 @@ partial class MainForm
         // 
         // MainForm
         // 
+        AutoScaleDimensions = new SizeF(96F, 96F);
+        AutoScaleMode = AutoScaleMode.Dpi;
         BackColor = Color.FromArgb(16, 21, 32);
         ClientSize = new Size(1464, 911);
         Controls.Add(outer);

@@ -51,6 +51,7 @@ public sealed partial class MainForm : Form
         _device = DeviceSequences.CreateDefault();
         DarkTitleBar.Attach(this);
         Localizer.Initialize();
+        ScrollableWorkspace.Attach(this, outer, new Size(1150, 760));
         ConfigureRuntimeUi();
         WireEvents();
         BindDevice();
@@ -178,19 +179,49 @@ public sealed partial class MainForm : Form
 
         void FitToolbarRow(FlowLayoutPanel panel, int row)
         {
-            float height = 44 + (panel.HorizontalScroll.Visible ? SystemInformation.HorizontalScrollBarHeight : 0);
-            if (bars.RowStyles[row].Height != height) bars.RowStyles[row].Height = height;
+            int contentHeight = panel.Controls.Cast<Control>()
+                .Where(control => control.Visible)
+                .Select(control => control.GetPreferredSize(Size.Empty).Height + control.Margin.Vertical)
+                .DefaultIfEmpty(0).Max();
+            int scrollHeight = panel.HorizontalScroll.Visible
+                ? SystemInformation.GetHorizontalScrollBarHeightForDpi(panel.DeviceDpi) : 0;
+            float height = Math.Max(panel.LogicalToDeviceUnits(44), contentHeight + panel.Padding.Vertical) + scrollHeight;
+            if (bars.RowStyles[row].Height != height)
+            {
+                bars.RowStyles[row].Height = height;
+            }
         }
+        // Keep every wrapped command row visible instead of scrolling inside the step toolbar.
+        rightTop.AutoScroll = false;
+        rightTop.AutoSize = true;
+        rightTop.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        rightTop.WrapContents = true;
+
         toolbar.Layout += (_, _) => FitToolbarRow(toolbar, 0);
         hardware.Layout += (_, _) => FitToolbarRow(hardware, 1);
 
         _telemetryTimer.Tick += async (_, _) => await ReadTelemetryAsync();
 
-        scroll.Resize += (_, _) =>
+        void FitTimeline()
         {
-            _timeline.Width = Math.Max(scroll.ClientSize.Width - 20, 800);
+            _timeline.Width = Math.Max(scroll.ClientSize.Width, _timeline.LogicalToDeviceUnits(800));
+            _timeline.Height = _timeline.GetPreferredSize(Size.Empty).Height;
             _timeline.Invalidate();
-        };
+        }
+        scroll.Resize += (_, _) => FitTimeline();
+        _timeline.DpiChangedAfterParent += (_, _) => FitTimeline();
+        FitTimeline();
+        _grid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+        void FitGridColumns()
+        {
+            int[] widths = { 55, 70, 70, 85, 100, 90, 180 };
+            for (int index = 0; index < widths.Length; index++)
+            {
+                _grid.Columns[index].MinimumWidth = _grid.LogicalToDeviceUnits(widths[index]);
+            }
+        }
+        _grid.DpiChangedAfterParent += (_, _) => FitGridColumns();
+        FitGridColumns();
 
         _grid.DataSource = _rows;
         _grid.CellToolTipTextNeeded += (_, e) =>

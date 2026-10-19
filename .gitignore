@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -7,3 +7,7 @@
 /bin/Debug/net10.0-windows
 /OBLSequenceStudio.csproj.user
 /.vs
+
+/artifacts/
+/Tests/**/bin/
+/Tests/**/obj/

@@ -41,6 +41,7 @@ public sealed partial class FirmwareUpdateWizard : Form
         _preferredPort = preferredPort;
         // Do not inspect firmware files or serial ports while the designer is loading.
         if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return;
+        ScrollableWorkspace.Attach(this, wizardLayout, new Size(804, 581));
         DarkTitleBar.Attach(this);
         Text = T("FirmwareUpdate");
         _cancel.Text = T("Cancel");
@@ -60,7 +61,7 @@ public sealed partial class FirmwareUpdateWizard : Form
         _back.Click += (_, _) => { _session?.Dispose(); _session = null; _page--; ShowPage(); };
         _next.Click += async (_, _) => await NextAsync();
         FormClosing += (_, e) => { if (_busy) e.Cancel = true; };
-        _choices.Resize += (_, _) => _file.Width = Math.Max(100, _choices.ClientSize.Width - 12);
+        _choices.Resize += (_, _) => _file.Width = Math.Max(_choices.LogicalToDeviceUnits(100), _choices.ClientSize.Width - _choices.LogicalToDeviceUnits(12));
         _hints.Set(_heading, "FirmwareHeading");
         _hints.Set(_instructions, "FirmwareInstructions");
         _hints.Set(_file, "FirmwareFile");
@@ -127,7 +128,7 @@ public sealed partial class FirmwareUpdateWizard : Form
         _progress.Visible = _page == 3;
         if (_page == 0)
         {
-            _instructions.Text = T("FirmwareSelectHelp"); _file.Width = Math.Max(100, _choices.ClientSize.Width - 12); _file.Dock = DockStyle.None;
+            _instructions.Text = T("FirmwareSelectHelp"); _file.Width = Math.Max(_choices.LogicalToDeviceUnits(100), _choices.ClientSize.Width - _choices.LogicalToDeviceUnits(12)); _file.Dock = DockStyle.None;
             _choices.Controls.Add(_file);
             _choices.Controls.Add(_browse);
         }

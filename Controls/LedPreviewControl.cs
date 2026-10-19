@@ -46,22 +46,25 @@ public sealed class LedPreviewControl : UserControl
         ButtonVisuals.Configure(_play, "Play");
         ButtonVisuals.Configure(_stop, "Stop");
         ButtonVisuals.Configure(_color, "Color");
-        var header = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 4, Padding = new Padding(6) };
+        var header = new TableLayoutPanel { Dock = DockStyle.Top, AutoSize = true, ColumnCount = 1, RowCount = 4, Padding = new Padding(6) };
         header.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        foreach (int height in new[] { 24, 36, 28, 36 }) header.RowStyles.Add(new RowStyle(SizeType.Absolute, height));
+        for (int row = 0; row < 4; row++)
+        {
+            header.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        }
         header.Controls.Add(_title, 0, 0);
-        var playback = new FlowLayoutPanel { Dock = DockStyle.Fill, WrapContents = false, Margin = Padding.Empty };
+        var playback = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, WrapContents = true, Margin = Padding.Empty };
         playback.Controls.Add(_play); playback.Controls.Add(_stop); playback.Controls.Add(_time);
         header.Controls.Add(playback, 0, 1);
         header.Controls.Add(_firmware, 0, 2);
-        var colors = new FlowLayoutPanel { Dock = DockStyle.Fill, WrapContents = false, Margin = Padding.Empty };
+        var colors = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, WrapContents = true, Margin = Padding.Empty };
         colors.Controls.Add(_colorChannel); colors.Controls.Add(_color);
         header.Controls.Add(colors, 0, 3);
         var layout = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Margin = Padding.Empty };
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 140));
+        layout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
         layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
         layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        header.Dock = DockStyle.Fill; header.Margin = Padding.Empty;
+        header.Dock = DockStyle.Top; header.Margin = Padding.Empty;
         _canvas.Margin = Padding.Empty;
         layout.Controls.Add(header, 0, 0); layout.Controls.Add(_canvas, 0, 1);
         Controls.Add(layout);
@@ -187,20 +190,22 @@ public sealed class LedPreviewControl : UserControl
             base.OnPaint(e);
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             float width = ClientSize.Width / 7f, height = ClientSize.Height / 4f;
+            float dpiScale = DeviceDpi / 96f;
+            int textHeight = TextRenderer.MeasureText("CH 00\n100%", Font).Height;
             for (int i = 0; i < 28; i++)
             {
                 float x = i % 7 * width, y = i / 7 * height;
-                float size = Math.Max(4, Math.Min(28, Math.Min(width - 10, height - 28)));
+                float size = Math.Max(4 * dpiScale, Math.Min(28 * dpiScale, Math.Min(width - 10 * dpiScale, height - textHeight - 8 * dpiScale)));
                 float intensity = Values[i] / 100f;
-                var circle = new RectangleF(x + (width - size) / 2, y + 3, size, size);
+                var circle = new RectangleF(x + (width - size) / 2, y + 3 * dpiScale, size, size);
                 using var brush = new SolidBrush(Color.FromArgb((int)(Colors[i].R * intensity), (int)(Colors[i].G * intensity), (int)(Colors[i].B * intensity)));
                 e.Graphics.FillEllipse(brush, circle);
-                using var border = new Pen(i + 1 == SelectedChannel ? Color.Cyan : Color.FromArgb(80, 90, 100), i + 1 == SelectedChannel ? 2 : 1);
+                using var border = new Pen(i + 1 == SelectedChannel ? Color.Cyan : Color.FromArgb(80, 90, 100), (i + 1 == SelectedChannel ? 2 : 1) * dpiScale);
                 e.Graphics.DrawEllipse(border, circle);
                 string label = Localizer.Text("ChannelShort", i + 1) + $"\n{Values[i]}%";
                 using var text = new SolidBrush(ForeColor);
                 using var format = new StringFormat { Alignment = StringAlignment.Center };
-                e.Graphics.DrawString(label, Font, text, new RectangleF(x, y + size + 4, width, Math.Max(1, height - size - 4)), format);
+                e.Graphics.DrawString(label, Font, text, new RectangleF(x, y + size + 4 * dpiScale, width, Math.Max(1, height - size - 4 * dpiScale)), format);
             }
         }
         protected override void OnMouseDown(MouseEventArgs e)

@@ -21,6 +21,7 @@ internal static class ButtonVisuals
         button.Padding = new Padding(6, 2, 6, 2);
         button.MinimumSize = new Size(0, 30);
         SetIcon(button, icon);
+        button.DpiChangedAfterParent += (_, _) => SetIcon(button, button.Image?.Tag as string ?? icon);
         button.Paint += PaintDisabled;
         button.EnabledChanged += (_, _) => button.Invalidate();
         button.Disposed += (_, _) => button.Image?.Dispose();
@@ -43,7 +44,7 @@ internal static class ButtonVisuals
         var content = Rectangle.FromLTRB(button.Padding.Left + 2, button.Padding.Top,
             bounds.Width - button.Padding.Right - 2, bounds.Height - button.Padding.Bottom);
         int imageWidth = button.Image?.Width ?? 0;
-        int gap = imageWidth > 0 && button.Text.Length > 0 ? 6 : 0;
+        int gap = imageWidth > 0 && button.Text.Length > 0 ? button.LogicalToDeviceUnits(6) : 0;
         int textWidth = TextRenderer.MeasureText(button.Text, button.Font).Width;
         int groupWidth = Math.Min(content.Width, imageWidth + gap + textWidth);
         int left = content.Left + Math.Max(0, (content.Width - groupWidth) / 2);
@@ -58,9 +59,11 @@ internal static class ButtonVisuals
     /// <summary>Replaces a button action icon, disposing the previous image when it is replaced.</summary>
     public static void SetIcon(Button button, string key)
     {
-        var bitmap = new Bitmap(20, 20);
+        int size = button.LogicalToDeviceUnits(20);
+        var bitmap = new Bitmap(size, size) { Tag = key };
         using (var g = Graphics.FromImage(bitmap))
         {
+            g.ScaleTransform(size / 20f, size / 20f);
             g.SmoothingMode = SmoothingMode.AntiAlias;
             using var pen = new Pen(button.ForeColor, 1.7f) { StartCap = LineCap.Round, EndCap = LineCap.Round, LineJoin = LineJoin.Round };
             using var fill = new SolidBrush(button.ForeColor);
